@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 
 @dataclass
@@ -7,10 +7,10 @@ class PasswordlessProblemDetails:
     type: str
     title: str
     status: int
-    detail: str = None
-    instance: str = None
-    error_code = None
-    errors: Dict[str, List[str]] = field(default_factory=dict)
+    detail: Optional[str] = None
+    instance: Optional[str] = None
+    error_code = Optional[None]
+    errors: Optional[Dict[str, List[str]]] = field(default_factory=dict)
 
 
 class PasswordlessError(Exception):

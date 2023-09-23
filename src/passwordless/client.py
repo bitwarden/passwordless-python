@@ -6,9 +6,12 @@ import logging
 from src.passwordless import UserSummary
 from src.passwordless.config import PasswordlessOptions
 from src.passwordless.errors import PasswordlessProblemDetails, PasswordlessError
-from src.passwordless.models import ListResponse, CreateAlias, Alias, UpdateAppsFeature
+from src.passwordless.models import ListResponse, CreateAlias, Alias, UpdateAppsFeature, DeleteCredential, Credential, \
+    RegisterToken, RegisteredToken, VerifiedUser, VerifySignIn, DeleteUser
 from src.passwordless.serialization import PasswordlessProblemDetailsSchema, UserSummaryListResponseSchema, \
-    CreateAliasSchema, AliasSchema, AliasListResponseSchema, UpdateAppsFeatureSchema
+    CreateAliasSchema, AliasListResponseSchema, UpdateAppsFeatureSchema, DeleteCredentialSchema, \
+    CredentialListResponseSchema, RegisterTokenSchema, RegisteredTokenSchema, VerifySignInSchema, \
+    VerifiedUserSchema, DeleteUserSchema
 
 
 class PasswordlessApiClient:
@@ -18,15 +21,35 @@ class PasswordlessApiClient:
         pass
 
     @abstractmethod
-    def get_users(self) -> List[UserSummary]:
-        pass
-
-    @abstractmethod
     def get_aliases(self, user_id: str) -> List[Alias]:
         pass
 
     @abstractmethod
     def update_apps_feature(self, update_apps_feature: UpdateAppsFeature) -> None:
+        pass
+
+    @abstractmethod
+    def delete_credential(self, delete_credential: DeleteCredential) -> None:
+        pass
+
+    @abstractmethod
+    def get_credentials(self, user_id: str) -> List[Credential]:
+        pass
+
+    @abstractmethod
+    def register_token(self, register_token: RegisterToken) -> RegisteredToken:
+        pass
+
+    @abstractmethod
+    def sign_in(self, verify_sign_in: VerifySignIn) -> VerifiedUser:
+        pass
+
+    @abstractmethod
+    def get_users(self) -> List[UserSummary]:
+        pass
+
+    @abstractmethod
+    def delete_user(self, delete_user: DeleteUser) -> None:
         pass
 
 
@@ -65,15 +88,6 @@ class PasswordlessApiClientImpl(PasswordlessApiClient, ABC):
 
         self.send_request(request)
 
-    def get_users(self) -> List[UserSummary]:
-        request = self.get_request('/users/list')
-        response_data = self.send_request(request)
-
-        schema = UserSummaryListResponseSchema()
-        list_response: ListResponse = schema.loads(response_data)
-
-        return list_response.values
-
     def get_aliases(self, user_id: str) -> List[Alias]:
         request = self.get_request('/alias/list', {"userId": user_id})
         response_data = self.send_request(request)
@@ -88,6 +102,62 @@ class PasswordlessApiClientImpl(PasswordlessApiClient, ABC):
         request_data = schema.dumps(update_apps_feature)
 
         request = self.post_request('/apps/features', request_data)
+
+        self.send_request(request)
+
+    def delete_credential(self, delete_credential: DeleteCredential) -> None:
+        schema = DeleteCredentialSchema()
+        request_data = schema.dumps(delete_credential)
+
+        request = self.post_request('/credentials/delete', request_data)
+
+        self.send_request(request)
+
+    def get_credentials(self, user_id: str) -> List[Credential]:
+        request = self.get_request('/credentials/list', {"userId": user_id})
+        response_data = self.send_request(request)
+
+        schema = CredentialListResponseSchema()
+        list_response: ListResponse = schema.loads(response_data)
+
+        return list_response.values
+
+    def register_token(self, register_token: RegisterToken) -> RegisteredToken:
+        request_schema = RegisterTokenSchema()
+        request_data = request_schema.dumps(register_token)
+
+        request = self.post_request('/register/token', request_data)
+
+        response_data = self.send_request(request)
+
+        response_schema = RegisteredTokenSchema()
+        return response_schema.loads(response_data)
+
+    def sign_in(self, verify_sign_in: VerifySignIn) -> VerifiedUser:
+        request_schema = VerifySignInSchema()
+        request_data = request_schema.dumps(verify_sign_in)
+
+        request = self.post_request('/signin/verify', request_data)
+
+        response_data = self.send_request(request)
+
+        response_schema = VerifiedUserSchema()
+        return response_schema.loads(response_data)
+
+    def get_users(self) -> List[UserSummary]:
+        request = self.get_request('/users/list')
+        response_data = self.send_request(request)
+
+        schema = UserSummaryListResponseSchema()
+        list_response: ListResponse = schema.loads(response_data)
+
+        return list_response.values
+
+    def delete_user(self, delete_user: DeleteUser) -> None:
+        schema = DeleteUserSchema()
+        request_data = schema.dumps(delete_user)
+
+        request = self.post_request('/users/delete', request_data)
 
         self.send_request(request)
 

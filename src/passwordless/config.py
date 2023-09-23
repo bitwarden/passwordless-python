@@ -1,4 +1,3 @@
-
 class PasswordlessOptions:
     def __init__(self, api_private_key: str):
         self.__init__('https://v4.passwordless.dev', api_private_key)
