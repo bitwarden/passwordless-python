@@ -1,7 +1,7 @@
 from marshmallow import Schema, fields, post_load, EXCLUDE
 
-from src.passwordless.errors import PasswordlessProblemDetails
-from src.passwordless.models import UserSummary, ListResponse, Alias, CredentialDescriptor, Credential, VerifiedUser, \
+from .errors import PasswordlessProblemDetails
+from .models import UserSummary, ListResponse, Alias, CredentialDescriptor, Credential, VerifiedUser, \
     RegisteredToken
 
 

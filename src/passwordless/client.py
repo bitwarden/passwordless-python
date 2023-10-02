@@ -3,12 +3,11 @@ from typing import List
 from abc import ABC, abstractmethod
 import logging
 
-from src.passwordless import UserSummary
-from src.passwordless.config import PasswordlessOptions
-from src.passwordless.errors import PasswordlessProblemDetails, PasswordlessError
-from src.passwordless.models import ListResponse, CreateAlias, Alias, UpdateAppsFeature, DeleteCredential, Credential, \
-    RegisterToken, RegisteredToken, VerifiedUser, VerifySignIn, DeleteUser
-from src.passwordless.serialization import PasswordlessProblemDetailsSchema, UserSummaryListResponseSchema, \
+from .config import PasswordlessOptions
+from .errors import PasswordlessProblemDetails, PasswordlessError
+from .models import ListResponse, CreateAlias, Alias, UpdateAppsFeature, DeleteCredential, Credential, \
+    RegisterToken, RegisteredToken, VerifiedUser, VerifySignIn, DeleteUser, UserSummary
+from .serialization import PasswordlessProblemDetailsSchema, UserSummaryListResponseSchema, \
     CreateAliasSchema, AliasListResponseSchema, UpdateAppsFeatureSchema, DeleteCredentialSchema, \
     CredentialListResponseSchema, RegisterTokenSchema, RegisteredTokenSchema, VerifySignInSchema, \
     VerifiedUserSchema, DeleteUserSchema
@@ -198,7 +197,7 @@ class PasswordlessApiClientImpl(PasswordlessApiClient, ABC):
 
     def build_headers(self, post: bool = False):
         headers = {
-            'ApiSecret': self.options.api_private_key
+            'ApiSecret': self.options.api_secret
         }
         if post:
             headers['Content-Type'] = 'application/json; charset=UTF-8'
