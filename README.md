@@ -1,4 +1,4 @@
-# Passwordless Java SDK
+# Passwordless Python SDK
 
 The official [Bitwarden Passwordless.dev](https://passwordless.dev/) Python library, for Python 3+.
 
@@ -37,10 +37,10 @@ Follow the [Get started guide][api-docs].
 
 ### Customization
 
-Customize `PasswordlessOptions` by providing `apiPrivateKey` with your Application's Private API Key.
-You can also change the `apiUrl` if you prefer to self-host.
+Customize `PasswordlessOptions` by providing `api_secret` with your Application's Api Secret.
+You can also change the `api_url` if you prefer to self-host.
 
-Customize `PasswordlessClientBuilder` by providing `session` [requests Session][requests] instance.
+Customize `PasswordlessApiClientBuilder` by providing `session` [requests Session][requests] instance.
 
 ### Examples
 
@@ -54,26 +54,18 @@ documentation][api-docs].
 
 ## Contributing
 
-This library is compatible with Python 3 and requires minimum Python 3.7 installed.
+This library is compatible with Python 3 and requires minimum Python 3.8 installed.
+[Poetry][poetry] needs to be installed too.
 
-Setup venv:
-```shell
-python3 -m venv env
-source env/bin/activate
-```
+Activate shell: `poetry shell`
 
-Install dependencies:
+Install dependencies: `poetry install`
 
-```shell
-python3 -m pip install flit flake8 wemake-python-styleguide
-```
-
-Build with flit: 
-```shell
-python3 -m flit build
-```
+Build: `poetry build`
 
 [api-docs]:https://docs.passwordless.dev/guide/get-started.html
+
+[poetry]:https://python-poetry.org/docs/#installation
 
 [requests]:https://requests.readthedocs.io/en/latest/
 

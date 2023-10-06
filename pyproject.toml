@@ -1,8 +1,10 @@
-[project]
+[tool.poetry]
 name = "passwordless"
+version = "0.1.0"
+description = ""
 authors = []
 readme = "README.md"
-license = {file = "LICENSE"}
+license = "LICENSE"
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Programming Language :: Python :: 3",
@@ -12,27 +14,31 @@ classifiers = [
     "Topic :: Software Development :: Libraries",
     "License :: OSI Approved :: Apache Software License"
 ]
-dynamic = ["version", "description"]
-requires-python = ">=3.7"
 keywords = ["passwordless", "bitwarden"]
-dependencies = [
-    "requests > 2",
-    "marshmallow > 3"
-]
+homepage = "https://bitwarden.com/products/passwordless"
+documentation = "https://docs.passwordless.dev/guide"
 
-[project.optional-dependencies]
-dotenv = ["python-dotenv"]
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2"
+marshmallow = "^3"
 
-[project.urls]
-Home = "https://bitwarden.com/products/passwordless"
-Documentation = "https://docs.passwordless.dev/guide"
-Source = "https://github.com/passwordless/passwordless-python"
+[tool.poetry.group.dev.dependencies]
+python-dotenv = "*"
+flake8 = "*"
+black = "*"
+mypy = "*"
+isort = "*"
+pre-commit = "*"
+pre-commit-hooks = "*"
+types-requests = "^2"
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-filterwarnings = [
-    "error",
-]
+[tool.poetry.group.test.dependencies]
+pytest = "*"
+pytest-mock = "*"
+
+[tool.poetry.group.docs.dependencies]
+mkdocs = "*"
 
 [tool.mypy]
 python_version = "3.8"
@@ -64,19 +70,15 @@ module = [
 ]
 ignore_missing_imports = true
 
+[tool.black]
+line-length = 79
+target-version = ['py38']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
 [build-system]
-requires = ["flit_core >=3.2,<4"]
-build-backend = "flit_core.buildapi"
-
-[tool.flit.module]
-name = "passwordless"
-
-[tool.flit.sdist]
-include = [
-    "requirements/",
-    "tests/",
-    "tox.ini",
-]
-exclude = [
-    "docs/_build/",
-]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

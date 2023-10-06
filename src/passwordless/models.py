@@ -1,12 +1,12 @@
-from datetime import datetime, timedelta
 from dataclasses import dataclass, field
-from typing import List, TypeVar, Optional
+from datetime import datetime, timedelta
+from typing import Generic, List, Optional, TypeVar
 
 T = TypeVar("T")
 
 
 @dataclass
-class CreateAlias:
+class SetAlias:
     user_id: str
     aliases: List[str]
     hashing: bool = True
@@ -21,7 +21,7 @@ class Alias:
 
 
 @dataclass
-class ListResponse:
+class ListResponse(Generic[T]):
     values: List[T]
 
 
@@ -73,10 +73,10 @@ class RegisterToken:
     user_id: str
     username: str
     display_name: str
-    attestation: str = 'none'
-    authenticator_type: str = 'any'
+    attestation: str = "none"
+    authenticator_type: str = "any"
     discoverable: bool = True
-    user_verification: str = 'preferred'
+    user_verification: str = "preferred"
     aliases: List[str] = field(default_factory=list)
     alias_hashing: bool = True
     expires_at: datetime = datetime.utcnow() + timedelta(minutes=2)

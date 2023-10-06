@@ -1,22 +1,44 @@
-from requests import Request, Response, Session
-from typing import List
-from abc import ABC, abstractmethod
 import logging
+from abc import ABC, abstractmethod
+from typing import Dict, List, Optional
+
+from requests import Request, Response, Session
 
 from .config import PasswordlessOptions
-from .errors import PasswordlessProblemDetails, PasswordlessError
-from .models import ListResponse, CreateAlias, Alias, UpdateAppsFeature, DeleteCredential, Credential, \
-    RegisterToken, RegisteredToken, VerifiedUser, VerifySignIn, DeleteUser, UserSummary
-from .serialization import PasswordlessProblemDetailsSchema, UserSummaryListResponseSchema, \
-    CreateAliasSchema, AliasListResponseSchema, UpdateAppsFeatureSchema, DeleteCredentialSchema, \
-    CredentialListResponseSchema, RegisterTokenSchema, RegisteredTokenSchema, VerifySignInSchema, \
-    VerifiedUserSchema, DeleteUserSchema
+from .errors import PasswordlessError, PasswordlessProblemDetails
+from .models import (
+    Alias,
+    Credential,
+    DeleteCredential,
+    DeleteUser,
+    ListResponse,
+    RegisteredToken,
+    RegisterToken,
+    SetAlias,
+    UpdateAppsFeature,
+    UserSummary,
+    VerifiedUser,
+    VerifySignIn,
+)
+from .serialization import (
+    AliasListResponseSchema,
+    CredentialListResponseSchema,
+    DeleteCredentialSchema,
+    DeleteUserSchema,
+    PasswordlessProblemDetailsSchema,
+    RegisteredTokenSchema,
+    RegisterTokenSchema,
+    SetAliasSchema,
+    UpdateAppsFeatureSchema,
+    UserSummaryListResponseSchema,
+    VerifiedUserSchema,
+    VerifySignInSchema,
+)
 
 
 class PasswordlessApiClient:
-
     @abstractmethod
-    def create_alias(self, create_alias: CreateAlias) -> None:
+    def set_alias(self, create_alias: SetAlias) -> None:
         pass
 
     @abstractmethod
@@ -24,7 +46,9 @@ class PasswordlessApiClient:
         pass
 
     @abstractmethod
-    def update_apps_feature(self, update_apps_feature: UpdateAppsFeature) -> None:
+    def update_apps_feature(
+        self, update_apps_feature: UpdateAppsFeature
+    ) -> None:
         pass
 
     @abstractmethod
@@ -52,10 +76,11 @@ class PasswordlessApiClient:
         pass
 
 
-def handle_response_error(response: Response):
+def handle_response_error(response: Response) -> None:
     problem_details = None
-    if 'Content-Type' in response.headers and response.headers['Content-Type'].startswith(
-            'application/problem+json'):
+    if "Content-Type" in response.headers and response.headers[
+        "Content-Type"
+    ].startswith("application/problem+json"):
         problem_details_schema = PasswordlessProblemDetailsSchema()
         problem_details = problem_details_schema.loads(response.text)
 
@@ -63,10 +88,11 @@ def handle_response_error(response: Response):
         logging.debug("Problem details fallback")
 
         problem_details = PasswordlessProblemDetails(
-            type='https://docs.passwordless.dev/guide/errors.html',
+            type="https://docs.passwordless.dev/guide/errors.html",
             status=response.status_code,
-            title='Unexpected error',
-            detail=response.text)
+            title="Unexpected error",
+            detail=response.text,
+        )
 
     logging.debug("Problem details %s", problem_details)
 
@@ -74,50 +100,55 @@ def handle_response_error(response: Response):
 
 
 class PasswordlessApiClientImpl(PasswordlessApiClient, ABC):
-
     def __init__(self, options: PasswordlessOptions, session: Session):
         self.options = options
         self.session = session
 
-    def create_alias(self, create_alias: CreateAlias) -> None:
-        schema = CreateAliasSchema()
+    def set_alias(self, create_alias: SetAlias) -> None:
+        schema = SetAliasSchema()
         request_data = schema.dumps(create_alias)
 
-        request = self.post_request('/alias', request_data)
+        request = self.__build_post_request("/alias", request_data)
 
-        self.send_request(request)
+        self.__send_request(request)
 
     def get_aliases(self, user_id: str) -> List[Alias]:
-        request = self.get_request('/alias/list', {"userId": user_id})
-        response_data = self.send_request(request)
+        request = self.__build_get_request("/alias/list", {"userId": user_id})
+        response = self.__send_request(request)
 
         schema = AliasListResponseSchema()
-        list_response: ListResponse = schema.loads(response_data)
+        list_response: ListResponse[Alias] = schema.loads(response.text)
 
         return list_response.values
 
-    def update_apps_feature(self, update_apps_feature: UpdateAppsFeature) -> None:
+    def update_apps_feature(
+        self, update_apps_feature: UpdateAppsFeature
+    ) -> None:
         schema = UpdateAppsFeatureSchema()
         request_data = schema.dumps(update_apps_feature)
 
-        request = self.post_request('/apps/features', request_data)
+        request = self.__build_post_request("/apps/features", request_data)
 
-        self.send_request(request)
+        self.__send_request(request)
 
     def delete_credential(self, delete_credential: DeleteCredential) -> None:
         schema = DeleteCredentialSchema()
         request_data = schema.dumps(delete_credential)
 
-        request = self.post_request('/credentials/delete', request_data)
+        request = self.__build_post_request(
+            "/credentials/delete", request_data
+        )
 
-        self.send_request(request)
+        self.__send_request(request)
 
     def get_credentials(self, user_id: str) -> List[Credential]:
-        request = self.get_request('/credentials/list', {"userId": user_id})
-        response_data = self.send_request(request)
+        request = self.__build_get_request(
+            "/credentials/list", {"userId": user_id}
+        )
+        response = self.__send_request(request)
 
         schema = CredentialListResponseSchema()
-        list_response: ListResponse = schema.loads(response_data)
+        list_response: ListResponse[Credential] = schema.loads(response.text)
 
         return list_response.values
 
@@ -125,30 +156,34 @@ class PasswordlessApiClientImpl(PasswordlessApiClient, ABC):
         request_schema = RegisterTokenSchema()
         request_data = request_schema.dumps(register_token)
 
-        request = self.post_request('/register/token', request_data)
+        request = self.__build_post_request("/register/token", request_data)
 
-        response_data = self.send_request(request)
+        response = self.__send_request(request)
 
         response_schema = RegisteredTokenSchema()
-        return response_schema.loads(response_data)
+        registered_token: RegisteredToken = response_schema.loads(
+            response.text
+        )
+        return registered_token
 
     def sign_in(self, verify_sign_in: VerifySignIn) -> VerifiedUser:
         request_schema = VerifySignInSchema()
         request_data = request_schema.dumps(verify_sign_in)
 
-        request = self.post_request('/signin/verify', request_data)
+        request = self.__build_post_request("/signin/verify", request_data)
 
-        response_data = self.send_request(request)
+        response = self.__send_request(request)
 
         response_schema = VerifiedUserSchema()
-        return response_schema.loads(response_data)
+        verified_user: VerifiedUser = response_schema.loads(response.text)
+        return verified_user
 
     def get_users(self) -> List[UserSummary]:
-        request = self.get_request('/users/list')
-        response_data = self.send_request(request)
+        request = self.__build_get_request("/users/list")
+        response = self.__send_request(request)
 
         schema = UserSummaryListResponseSchema()
-        list_response: ListResponse = schema.loads(response_data)
+        list_response: ListResponse[UserSummary] = schema.loads(response.text)
 
         return list_response.values
 
@@ -156,57 +191,75 @@ class PasswordlessApiClientImpl(PasswordlessApiClient, ABC):
         schema = DeleteUserSchema()
         request_data = schema.dumps(delete_user)
 
-        request = self.post_request('/users/delete', request_data)
+        request = self.__build_post_request("/users/delete", request_data)
 
-        self.send_request(request)
+        self.__send_request(request)
 
-    def get_request(self, path: str, query_params=None) -> Request:
+    def __build_get_request(
+        self,
+        path: str,
+        query_params: Optional[Dict[str, str]] = None,
+    ) -> Request:
         if query_params is None:
             query_params = {}
 
-        url = self.build_url(path)
-        headers = self.build_headers()
+        url = self.__build_url(path)
+        headers = self.__build_headers()
 
-        return Request(method='GET', url=url, headers=headers, params=query_params)
+        return Request(
+            method="GET", url=url, headers=headers, params=query_params
+        )
 
-    def post_request(self, path: str, data: str) -> Request:
-        url = self.build_url(path)
-        headers = self.build_headers(post=True)
+    def __build_post_request(self, path: str, data: str) -> Request:
+        url = self.__build_url(path)
+        headers = self.__build_headers(post=True)
 
-        return Request(method='POST', url=url, headers=headers, data=data)
+        return Request(method="POST", url=url, headers=headers, data=data)
 
-    def send_request(self, request: Request) -> str:
-
-        logging.debug('Sending request method %s url %s headers %s params %s data %s',
-                      request.method, request.url, request.headers, request.params, request.data)
+    def __send_request(self, request: Request) -> Response:
+        logging.debug(
+            "Sending request method %s url %s headers %s params %s data %s",
+            request.method,
+            request.url,
+            request.headers,
+            request.params,
+            request.data,
+        )
 
         prepped_request = self.session.prepare_request(request)
 
-        response = self.session.send(prepped_request, allow_redirects=True, timeout=30)
+        response = self.session.send(
+            prepped_request, allow_redirects=True, timeout=30
+        )
 
-        logging.debug('Response code %s headers %s data %s',
-                      response.status_code, response.headers, response.text)
+        logging.debug(
+            "Response code %s headers %s data %s",
+            response.status_code,
+            response.headers,
+            response.text,
+        )
 
         if response.status_code >= 400:
             handle_response_error(response)
 
-        return response.text
+        return response
 
-    def build_url(self, path: str):
+    def __build_url(self, path: str) -> str:
         return self.options.api_url + path
 
-    def build_headers(self, post: bool = False):
-        headers = {
-            'ApiSecret': self.options.api_secret
-        }
+    def __build_headers(self, post: bool = False) -> Dict[str, str]:
+        headers = {"ApiSecret": self.options.api_secret}
         if post:
-            headers['Content-Type'] = 'application/json; charset=UTF-8'
+            headers["Content-Type"] = "application/json; charset=UTF-8"
         return headers
 
 
 class PasswordlessApiClientBuilder:
-
-    def __init__(self, options: PasswordlessOptions, session: Session = None):
+    def __init__(
+        self,
+        options: PasswordlessOptions,
+        session: Optional[Session] = None,
+    ):
         self.options = options
         if session is None:
             session = Session()
@@ -214,9 +267,3 @@ class PasswordlessApiClientBuilder:
 
     def build(self) -> PasswordlessApiClient:
         return PasswordlessApiClientImpl(self.options, self.session)
-
-# def handle_response(response):
-#     if response.status_code >= 200 and response.status_code < 300:
-#         return response.json()
-#     else:
-#         raise PasswordlessError(response.json()['message'])
