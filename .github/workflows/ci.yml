@@ -1,4 +1,4 @@
-name: Java CI
+name: Python CI
 
 on:
   push:
@@ -8,7 +8,6 @@ on:
   pull_request:
     branches:
       - main
-      - dev
 
 jobs:
   build-maven:
