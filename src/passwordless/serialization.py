@@ -18,15 +18,18 @@ class PasswordlessProblemDetailsSchema(Schema):
     type = fields.Str()
     title = fields.Str()
     status = fields.Int()
-    detail = fields.Str(required=False)
-    instance = fields.Str(required=False)
-    error_code = fields.Str(required=False)
+    detail = fields.Str(required=False, allow_none=True)
+    instance = fields.Str(required=False, allow_none=True)
+    error_code = fields.Str(required=False, allow_none=True)
     errors = fields.Dict(
-        fields.Str(), fields.List(fields.Str()), required=False
+        fields.Str(),
+        fields.List(fields.Str()),
+        required=False,
+        allow_none=True,
     )
 
     @post_load
-    def make(self, data: Any) -> PasswordlessProblemDetails:
+    def make(self, data: Any, **kwargs: Any) -> PasswordlessProblemDetails:
         return PasswordlessProblemDetails(**data)
 
     class Meta:
@@ -45,11 +48,11 @@ class SetAliasSchema(Schema):
 class AliasSchema(Schema):
     user_id = fields.Str(data_key="userId")
     alias = fields.Str()
-    plaintext = fields.Str(allow_none=True)
+    plaintext = fields.Str(required=False, allow_none=True)
     tenant = fields.Str()
 
     @post_load
-    def make(self, data: Any) -> Alias:
+    def make(self, data: Any, **kwargs: Any) -> Alias:
         return Alias(**data)
 
     class Meta:
@@ -60,7 +63,7 @@ class AliasListResponseSchema(Schema):
     values = fields.List(fields.Nested(AliasSchema()))
 
     @post_load
-    def make(self, data: Any) -> ListResponse[Alias]:
+    def make(self, data: Any, **kwargs: Any) -> ListResponse[Alias]:
         return ListResponse(**data)
 
     class Meta:
@@ -86,10 +89,10 @@ class DeleteCredentialSchema(Schema):
 class CredentialDescriptorSchema(Schema):
     type = fields.Str()
     id = fields.Str()
-    transports = fields.List(fields.Str(), required=False)
+    transports = fields.List(fields.Str(), required=False, allow_none=True)
 
     @post_load
-    def make(self, data: Any) -> CredentialDescriptor:
+    def make(self, data: Any, **kwargs: Any) -> CredentialDescriptor:
         return CredentialDescriptor(**data)
 
     class Meta:
@@ -112,7 +115,7 @@ class CredentialSchema(Schema):
     user_id = fields.Str(data_key="userId")
 
     @post_load
-    def make(self, data: Any) -> Credential:
+    def make(self, data: Any, **kwargs: Any) -> Credential:
         return Credential(**data)
 
     class Meta:
@@ -123,7 +126,7 @@ class CredentialListResponseSchema(Schema):
     values = fields.List(fields.Nested(CredentialSchema()))
 
     @post_load
-    def make(self, data: Any) -> ListResponse[Credential]:
+    def make(self, data: Any, **kwargs: Any) -> ListResponse[Credential]:
         return ListResponse(**data)
 
     class Meta:
@@ -150,7 +153,7 @@ class RegisteredTokenSchema(Schema):
     token = fields.Str()
 
     @post_load
-    def make(self, data: Any) -> RegisteredToken:
+    def make(self, data: Any, **kwargs: Any) -> RegisteredToken:
         return RegisteredToken(**data)
 
     class Meta:
@@ -172,14 +175,14 @@ class VerifiedUserSchema(Schema):
     origin = fields.Str()
     device = fields.Str()
     country = fields.Str()
-    nickname = fields.Str()
+    nickname = fields.Str(required=False, allow_none=True)
     credential_id = fields.Str(data_key="credentialId")
     expires_at = fields.DateTime(data_key="expiresAt")
     token_id = fields.Str(data_key="tokenId")
     type = fields.Str()
 
     @post_load
-    def make(self, data: Any) -> VerifiedUser:
+    def make(self, data: Any, **kwargs: Any) -> VerifiedUser:
         return VerifiedUser(**data)
 
     class Meta:
@@ -189,12 +192,18 @@ class VerifiedUserSchema(Schema):
 class UserSummarySchema(Schema):
     user_id = fields.Str(data_key="userId")
     alias_count = fields.Int(data_key="aliasCount")
-    aliases = fields.List(fields.Str(allow_none=True), allow_none=True)
+    aliases = fields.List(
+        fields.Str(required=False, allow_none=True),
+        required=False,
+        allow_none=True,
+    )
     credentials_count = fields.Int(data_key="credentialsCount")
-    last_used_at = fields.DateTime(data_key="lastUsedAt")
+    last_used_at = fields.DateTime(
+        data_key="lastUsedAt", required=False, allow_none=True
+    )
 
     @post_load
-    def make(self, data: Any) -> UserSummary:
+    def make(self, data: Any, **kwargs: Any) -> UserSummary:
         return UserSummary(**data)
 
     class Meta:
@@ -205,7 +214,7 @@ class UserSummaryListResponseSchema(Schema):
     values = fields.List(fields.Nested(UserSummarySchema()))
 
     @post_load
-    def make(self, data: Any) -> ListResponse[UserSummary]:
+    def make(self, data: Any, **kwargs: Any) -> ListResponse[UserSummary]:
         return ListResponse(**data)
 
     class Meta:

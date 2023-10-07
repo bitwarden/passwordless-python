@@ -6,6 +6,7 @@ __version__ = "0.0.1"
 
 from .client import PasswordlessApiClient, PasswordlessApiClientBuilder
 from .config import PasswordlessOptions
+from .errors import PasswordlessError, PasswordlessProblemDetails
 from .models import (
     Alias,
     Credential,
@@ -24,8 +25,14 @@ from .serialization import (
     AliasSchema,
     CredentialDescriptorSchema,
     CredentialSchema,
+    DeleteCredentialSchema,
+    DeleteUserSchema,
     PasswordlessProblemDetailsSchema,
     RegisteredTokenSchema,
+    RegisterTokenSchema,
+    SetAliasSchema,
+    UpdateAppsFeatureSchema,
     UserSummarySchema,
     VerifiedUserSchema,
+    VerifySignInSchema,
 )
