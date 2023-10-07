@@ -4,7 +4,7 @@ The official Bitwarden Passwordless.dev Python library for Python 3+.
 
 __version__ = "0.0.1"
 
-from .client import PasswordlessApiClient, PasswordlessApiClientBuilder
+from .client import PasswordlessClient, PasswordlessClientBuilder
 from .config import PasswordlessOptions
 from .errors import PasswordlessError, PasswordlessProblemDetails
 from .models import (

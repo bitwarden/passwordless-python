@@ -36,7 +36,7 @@ from .serialization import (
 )
 
 
-class PasswordlessApiClient:
+class PasswordlessClient:
     @abstractmethod
     def set_alias(self, create_alias: SetAlias) -> None:
         pass
@@ -99,7 +99,7 @@ def handle_response_error(response: Response) -> None:
     raise PasswordlessError(problem_details)
 
 
-class PasswordlessApiClientImpl(PasswordlessApiClient, ABC):
+class PasswordlessClientImpl(PasswordlessClient, ABC):
     def __init__(self, options: PasswordlessOptions, session: Session):
         self.options = options
         self.session = session
@@ -254,7 +254,7 @@ class PasswordlessApiClientImpl(PasswordlessApiClient, ABC):
         return headers
 
 
-class PasswordlessApiClientBuilder:
+class PasswordlessClientBuilder:
     def __init__(
         self,
         options: PasswordlessOptions,
@@ -265,5 +265,5 @@ class PasswordlessApiClientBuilder:
             session = Session()
         self.session = session
 
-    def build(self) -> PasswordlessApiClient:
-        return PasswordlessApiClientImpl(self.options, self.session)
+    def build(self) -> PasswordlessClient:
+        return PasswordlessClientImpl(self.options, self.session)

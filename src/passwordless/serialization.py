@@ -18,13 +18,12 @@ class PasswordlessProblemDetailsSchema(Schema):
     type = fields.Str()
     title = fields.Str()
     status = fields.Int()
-    detail = fields.Str(required=False, allow_none=True)
-    instance = fields.Str(required=False, allow_none=True)
-    error_code = fields.Str(required=False, allow_none=True)
+    detail = fields.Str(allow_none=True)
+    instance = fields.Str(allow_none=True)
+    error_code = fields.Str(allow_none=True)
     errors = fields.Dict(
         fields.Str(),
         fields.List(fields.Str()),
-        required=False,
         allow_none=True,
     )
 
@@ -37,8 +36,8 @@ class PasswordlessProblemDetailsSchema(Schema):
 
 
 class SetAliasSchema(Schema):
-    user_id = fields.Str(data_key="userId")
-    aliases = fields.List(fields.Str())
+    user_id = fields.Str(data_key="userId", required=True)
+    aliases = fields.List(fields.Str(), required=True)
     hashing = fields.Bool()
 
     class Meta:
@@ -48,7 +47,7 @@ class SetAliasSchema(Schema):
 class AliasSchema(Schema):
     user_id = fields.Str(data_key="userId")
     alias = fields.Str()
-    plaintext = fields.Str(required=False, allow_none=True)
+    plaintext = fields.Str(allow_none=True)
     tenant = fields.Str()
 
     @post_load
@@ -80,7 +79,7 @@ class UpdateAppsFeatureSchema(Schema):
 
 
 class DeleteCredentialSchema(Schema):
-    credential_id = fields.Str(data_key="credentialId")
+    credential_id = fields.Str(data_key="credentialId", required=True)
 
     class Meta:
         unknown = EXCLUDE
@@ -89,7 +88,7 @@ class DeleteCredentialSchema(Schema):
 class CredentialDescriptorSchema(Schema):
     type = fields.Str()
     id = fields.Str()
-    transports = fields.List(fields.Str(), required=False, allow_none=True)
+    transports = fields.List(fields.Str(), allow_none=True)
 
     @post_load
     def make(self, data: Any, **kwargs: Any) -> CredentialDescriptor:
@@ -134,8 +133,8 @@ class CredentialListResponseSchema(Schema):
 
 
 class RegisterTokenSchema(Schema):
-    user_id = fields.Str(data_key="userId")
-    username = fields.Str()
+    user_id = fields.Str(data_key="userId", required=True)
+    username = fields.Str(required=True)
     display_name = fields.Str(data_key="displayName")
     attestation = fields.Str()
     authenticator_type = fields.Str(data_key="authenticatorType")
@@ -161,7 +160,7 @@ class RegisteredTokenSchema(Schema):
 
 
 class VerifySignInSchema(Schema):
-    token = fields.Str()
+    token = fields.Str(required=True)
 
     class Meta:
         unknown = EXCLUDE
@@ -175,7 +174,7 @@ class VerifiedUserSchema(Schema):
     origin = fields.Str()
     device = fields.Str()
     country = fields.Str()
-    nickname = fields.Str(required=False, allow_none=True)
+    nickname = fields.Str(allow_none=True)
     credential_id = fields.Str(data_key="credentialId")
     expires_at = fields.DateTime(data_key="expiresAt")
     token_id = fields.Str(data_key="tokenId")
@@ -193,14 +192,11 @@ class UserSummarySchema(Schema):
     user_id = fields.Str(data_key="userId")
     alias_count = fields.Int(data_key="aliasCount")
     aliases = fields.List(
-        fields.Str(required=False, allow_none=True),
-        required=False,
+        fields.Str(allow_none=True),
         allow_none=True,
     )
     credentials_count = fields.Int(data_key="credentialsCount")
-    last_used_at = fields.DateTime(
-        data_key="lastUsedAt", required=False, allow_none=True
-    )
+    last_used_at = fields.DateTime(data_key="lastUsedAt", allow_none=True)
 
     @post_load
     def make(self, data: Any, **kwargs: Any) -> UserSummary:
@@ -222,4 +218,4 @@ class UserSummaryListResponseSchema(Schema):
 
 
 class DeleteUserSchema(Schema):
-    user_id = fields.Str(data_key="userId")
+    user_id = fields.Str(data_key="userId", required=True)

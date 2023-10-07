@@ -72,7 +72,7 @@ class Credential:
 class RegisterToken:
     user_id: str
     username: str
-    display_name: str
+    display_name: Optional[str] = None
     attestation: str = "none"
     authenticator_type: str = "any"
     discoverable: bool = True
