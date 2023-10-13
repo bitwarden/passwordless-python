@@ -98,7 +98,6 @@ class VerifiedUser:
     success: bool
     user_id: str
     timestamp: datetime
-    rp_id: str
     origin: str
     device: str
     country: str
@@ -110,6 +109,7 @@ class VerifiedUser:
     expires_at: datetime
     token_id: str
     type: str
+    rp_id: Optional[str] = None
 
 
 @dataclass
