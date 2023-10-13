@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from typing import Generic, List, Optional, TypeVar
 
 T = TypeVar("T")
+STR_OR_NONE = TypeVar("STR_OR_NONE", str, None)
 
 
 @dataclass
@@ -16,8 +17,8 @@ class SetAlias:
 class Alias:
     user_id: str
     alias: str
-    plaintext: str
     tenant: str
+    plaintext: Optional[str] = None
 
 
 @dataclass
@@ -112,10 +113,10 @@ class VerifiedUser:
 
 
 @dataclass
-class UserSummary:
+class UserSummary(Generic[STR_OR_NONE]):
     user_id: str
     alias_count: int
-    aliases: List[str]
+    aliases: List[STR_OR_NONE]
     credentials_count: int
     last_used_at: datetime
 

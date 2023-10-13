@@ -199,7 +199,7 @@ class UserSummarySchema(Schema):
     last_used_at = fields.DateTime(data_key="lastUsedAt", allow_none=True)
 
     @post_load
-    def make(self, data: Any, **kwargs: Any) -> UserSummary:
+    def make(self, data: Any, **kwargs: Any) -> UserSummary[Any]:
         return UserSummary(**data)
 
     class Meta:
@@ -210,7 +210,7 @@ class UserSummaryListResponseSchema(Schema):
     values = fields.List(fields.Nested(UserSummarySchema()))
 
     @post_load
-    def make(self, data: Any, **kwargs: Any) -> ListResponse[UserSummary]:
+    def make(self, data: Any, **kwargs: Any) -> ListResponse[UserSummary[Any]]:
         return ListResponse(**data)
 
     class Meta:

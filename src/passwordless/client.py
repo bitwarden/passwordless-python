@@ -1,6 +1,6 @@
 import logging
 from abc import ABC, abstractmethod
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 from requests import Request, Response, Session
 
@@ -68,7 +68,7 @@ class PasswordlessClient:
         pass
 
     @abstractmethod
-    def get_users(self) -> List[UserSummary]:
+    def get_users(self) -> List[UserSummary[Any]]:
         pass
 
     @abstractmethod
@@ -178,12 +178,14 @@ class PasswordlessClientImpl(PasswordlessClient, ABC):
         verified_user: VerifiedUser = response_schema.loads(response.text)
         return verified_user
 
-    def get_users(self) -> List[UserSummary]:
+    def get_users(self) -> List[UserSummary[Any]]:
         request = self.__build_get_request("/users/list")
         response = self.__send_request(request)
 
         schema = UserSummaryListResponseSchema()
-        list_response: ListResponse[UserSummary] = schema.loads(response.text)
+        list_response: ListResponse[UserSummary[Any]] = schema.loads(
+            response.text
+        )
 
         return list_response.values
 
