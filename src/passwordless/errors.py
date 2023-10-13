@@ -15,7 +15,7 @@ class PasswordlessProblemDetails:
     status: int
     detail: Optional[str] = None
     instance: Optional[str] = None
-    error_code = Optional[None]
+    error_code: Optional[str] = None
     errors: Optional[Dict[str, List[str]]] = field(
         default_factory=passwordless_problem_details_errors_factory
     )
