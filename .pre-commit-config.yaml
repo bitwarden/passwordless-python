@@ -15,7 +15,9 @@ repos:
     rev: 08cbc46b6e135adec84911b20e98e5bc52032152 # v1.5.1
     hooks:
       - id: mypy
+        require_serial: true
         additional_dependencies: [
           types-requests>2,
           marshmallow>3
         ]
+        exclude: tests
