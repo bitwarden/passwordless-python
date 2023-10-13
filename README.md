@@ -15,8 +15,6 @@ Install with `python -m pip install passwordless`.
 
 Follow the [Get started guide][api-docs].
 
-[//]: # (TODO)
-
 ### Create `PasswordlessClient` instance:
 
 ```python
