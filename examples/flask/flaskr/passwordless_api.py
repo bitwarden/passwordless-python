@@ -1,6 +1,3 @@
-from flask import make_response, request
-from flaskr.passwordless_bp import PasswordlessApiBlueprint
-
 from passwordless import (
     AliasSchema,
     CredentialSchema,
@@ -16,6 +13,9 @@ from passwordless import (
     VerifiedUserSchema,
     VerifySignInSchema,
 )
+
+from flask import make_response, request
+from flaskr.passwordless_bp import PasswordlessApiBlueprint
 
 api_bp = PasswordlessApiBlueprint(
     "passwordless-api", __name__, url_prefix="/api"

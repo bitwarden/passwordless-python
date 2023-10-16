@@ -1,10 +1,10 @@
-from flask import Blueprint, Flask
-
 from passwordless import (
     PasswordlessClient,
     PasswordlessClientBuilder,
     PasswordlessOptions,
 )
+
+from flask import Blueprint, Flask
 
 from .passwordless_api_config import PasswordlessApiConfig
 

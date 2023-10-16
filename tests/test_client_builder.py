@@ -1,12 +1,11 @@
 import requests
-from pytest_httpserver import HTTPServer
-from werkzeug import Response
-
 from passwordless import (
     DeleteCredential,
     PasswordlessClient,
     PasswordlessClientBuilder,
 )
+from pytest_httpserver import HTTPServer
+from werkzeug import Response
 
 from .http_utils import (
     build_passwordless_options_http_server,

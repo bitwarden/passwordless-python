@@ -1,12 +1,11 @@
-from pytest_httpserver import HTTPServer
-from werkzeug import Response
-
 from passwordless import (
     PasswordlessClientBuilder,
     PasswordlessOptions,
     PasswordlessProblemDetails,
     PasswordlessProblemDetailsSchema,
 )
+from pytest_httpserver import HTTPServer
+from werkzeug import Response
 
 from .data_factory import SECRET, build_passwordless_options
 
