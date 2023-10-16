@@ -100,7 +100,7 @@ Install [Poetry][poetry] if not already installed.
 
 Activate shell: `poetry shell`
 
-Install dependencies: `poetry install`
+Install dependencies: `poetry install --with dev,test`
 
 Build: `poetry build`
 

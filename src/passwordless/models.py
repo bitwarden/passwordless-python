@@ -39,9 +39,7 @@ class DeleteCredential:
 @dataclass
 class CredentialDescriptor:
     type: str
-    """
-    Base64 encoded credential descriptor id.
-    """
+    """Base64 encoded credential descriptor id."""
     id: str
     transports: Optional[List[str]] = None
 
@@ -49,13 +47,9 @@ class CredentialDescriptor:
 @dataclass
 class Credential:
     descriptor: CredentialDescriptor
-    """
-    Base64 encoded public key.
-    """
+    """Base64 encoded public key."""
     public_key: str
-    """
-    Base64 encoded user handle.
-    """
+    """Base64 encoded user handle."""
     user_handle: str
     signature_counter: int
     attestation_fmt: str
@@ -102,9 +96,7 @@ class VerifiedUser:
     device: str
     country: str
     nickname: str
-    """
-    Base64 encoded credential id.
-    """
+    """Base64 encoded credential id."""
     credential_id: str
     expires_at: datetime
     token_id: str

@@ -37,42 +37,119 @@ from .serialization import (
 
 
 class PasswordlessClient:
+    """Provides APIs that help you interact with Passwordless.dev.
+
+    Create new instance of the client with `PasswordlessClientBuilder`.
+    """
+
     @abstractmethod
     def set_alias(self, create_alias: SetAlias) -> None:
+        """Creates or replaces existing aliases for a given user.
+
+        :param create_alias: `SetAlias` containing details about the aliases
+            for a user.
+        :raises PasswordlessError: If the Passwordless Api responds with
+            an error.
+        """
         pass
 
     @abstractmethod
     def get_aliases(self, user_id: str) -> List[Alias]:
+        """List all aliases for a given user.
+
+        :param user_id: The userId of the user for which the aliases
+            will be returned.
+        :return: List of aliases
+        :raises PasswordlessError: If the Passwordless Api responds with
+            an error.
+        """
         pass
 
     @abstractmethod
     def update_apps_feature(
         self, update_apps_feature: UpdateAppsFeature
     ) -> None:
+        """Updates application features for the account associated with
+        your ApiSecret.
+
+        :param update_apps_feature: `UpdateAppsFeature` containing details
+            about the updatable features for an application.
+        :raises PasswordlessError: If the Passwordless Api responds with
+            an error.
+        """
         pass
 
     @abstractmethod
     def delete_credential(self, delete_credential: DeleteCredential) -> None:
+        """Attempts to delete a credential.
+
+        :param delete_credential: `DeleteCredential` containing details
+            about the credential id to be deleted.
+        :raises PasswordlessError: If the Passwordless Api responds with
+            an error.
+        """
         pass
 
     @abstractmethod
     def get_credentials(self, user_id: str) -> List[Credential]:
+        """List all credentials for a given user.
+
+        :param user_id: The userId of the user for which the credentials
+            will be returned.
+        :return: List of credentials
+        :raises PasswordlessError: If the Passwordless Api responds with
+            an error.
+        """
         pass
 
     @abstractmethod
     def register_token(self, register_token: RegisterToken) -> RegisteredToken:
+        """Creates a register token which will be used by your frontend
+        to negotiate the creation of a WebAuth credential.
+
+        :param register_token: `RegisterToken` containing details about
+            the registration of the token.
+        :return: Registered token
+        :raises PasswordlessError: If the Passwordless Api responds with
+            an error.
+        """
         pass
 
     @abstractmethod
     def sign_in(self, verify_sign_in: VerifySignIn) -> VerifiedUser:
+        """Verifies that the given token is valid and returns
+        information packed into it. The token should have been generated
+        via calling a `signInWith` method from your frontend code.
+
+        :param verify_sign_in: `VerifySignIn` containing details about the
+            token to verify.
+        :return: User token details upon successful verification of the
+            token.
+        :raises PasswordlessError: If the Passwordless Api responds with
+            an error.
+        """
         pass
 
     @abstractmethod
     def get_users(self) -> List[UserSummary[Any]]:
+        """List all users for the account associated with your
+        ApiSecret.
+
+        :return: List of user summaries.
+        :raises PasswordlessError: If the Passwordless Api responds with
+            an error.
+        """
         pass
 
     @abstractmethod
     def delete_user(self, delete_user: DeleteUser) -> None:
+        """Deletes a user.
+
+        :param delete_user: `DeleteUser` containing details about the user
+            to delete.
+        :raises PasswordlessError: If the Passwordless Api responds with
+            an error.
+        """
         pass
 
 
@@ -257,15 +334,34 @@ class PasswordlessClientImpl(PasswordlessClient, ABC):
 
 
 class PasswordlessClientBuilder:
+    """The `PasswordlessClient` builder, which provides APIs that help
+    you interact with Passwordless.dev.
+
+    Example::
+
+        passwordless_options = PasswordlessOptions(api_secret='...')
+        client = PasswordlessClientBuilder(passwordless_options).build()
+    """
+
     def __init__(
         self,
         options: PasswordlessOptions,
         session: Optional[Session] = None,
     ):
+        """Creates the builder for given passwordless configuration
+        options.
+
+        :param options: Configuration options for Passwordless Api.
+        :param session: (Optional) Configures with custom `requests.Session`.
+        """
         self.options = options
         if session is None:
             session = Session()
         self.session = session
 
     def build(self) -> PasswordlessClient:
+        """Builds the Passwordless client.
+
+        :return: The `PasswordlessClient` object.
+        """
         return PasswordlessClientImpl(self.options, self.session)

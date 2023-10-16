@@ -4,6 +4,12 @@ repos:
     hooks:
       - id: isort
         args: ['--settings-path', 'pyproject.toml']
+  - repo: https://github.com/PyCQA/docformatter
+    rev: dfefe062799848234b4cd60b04aa633c0608025e # v1.7.5
+    hooks:
+      - id: docformatter
+        additional_dependencies: [tomli]
+        args: ['--in-place', '--config', './pyproject.toml']
   - repo: https://github.com/psf/black
     rev: e87737140f32d3cd7c44ede75f02dcd58e55820e # 23.9.1
     hooks:

@@ -25,6 +25,8 @@ jobs:
           cache: 'poetry'
       - name: Build
         run: poetry install
+      - name: Run docformatter
+        run: poetry run docformatter --in-place --config ./pyproject.toml src/
       - name: Run black
         run: poetry run black . --check
       - name: Run isort

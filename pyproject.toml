@@ -28,6 +28,9 @@ python = "^3.8"
 requests = "^2"
 marshmallow = "^3"
 
+[tool.poetry.group.dev]
+optional = true
+
 [tool.poetry.group.dev.dependencies]
 python-dotenv = "*"
 flake8 = "*"
@@ -37,14 +40,15 @@ isort = "*"
 pre-commit = "*"
 pre-commit-hooks = "*"
 types-requests = "^2"
+docformatter = {extras = ["tomli"], version = "^1.7.5"}
+
+[tool.poetry.group.test]
+optional = true
 
 [tool.poetry.group.test.dependencies]
 pytest = "*"
 pytest-mock = "*"
 pytest-httpserver = "*"
-
-[tool.poetry.group.docs.dependencies]
-mkdocs = "*"
 
 [tool.mypy]
 python_version = "3.8"
@@ -72,6 +76,13 @@ include = '\.pyi?$'
 profile = "black"
 multi_line_output = 3
 line_length = 79
+
+[tool.docformatter]
+black = true
+recursive = true
+wrap-descriptions = 72
+wrap-summaries = 72
+blank = false
 
 [build-system]
 requires = ["poetry-core"]

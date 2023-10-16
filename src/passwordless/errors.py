@@ -10,6 +10,12 @@ def passwordless_problem_details_errors_factory() -> (
 
 @dataclass
 class PasswordlessProblemDetails:
+    """Problem details for Passwordless Api.
+
+    See Passwordless Docs Errors:
+    https://docs.passwordless.dev/guide/errors.html#problem-details
+    """
+
     type: str
     title: str
     status: int
@@ -22,6 +28,12 @@ class PasswordlessProblemDetails:
 
 
 class PasswordlessError(Exception):
+    """Thrown when Passwordless API returns an error during the
+    `PasswordlessClient` method execution.
+
+    Access the problem details with `problem_details` field.
+    """
+
     def __init__(self, problem_details: PasswordlessProblemDetails):
         self.problem_details = problem_details
 

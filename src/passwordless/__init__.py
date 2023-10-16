@@ -1,6 +1,5 @@
-"""
-The official Bitwarden Passwordless.dev Python library for Python 3+.
-"""
+"""The official Bitwarden Passwordless.dev Python library for Python
+3+."""
 
 __version__ = "0.0.1"
 
