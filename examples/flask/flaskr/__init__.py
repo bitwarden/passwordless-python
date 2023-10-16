@@ -1,9 +1,8 @@
 import logging
 
 from flasgger import Swagger
-from flask_marshmallow import Marshmallow
-
 from flask import Flask
+from flask_marshmallow import Marshmallow
 
 from . import passwordless
 

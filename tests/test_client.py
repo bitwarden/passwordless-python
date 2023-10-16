@@ -1,4 +1,7 @@
 import pytest
+from pytest_httpserver import HTTPServer
+from werkzeug import Response
+
 from passwordless import PasswordlessError
 from passwordless.models import ListResponse
 from passwordless.serialization import (
@@ -14,8 +17,6 @@ from passwordless.serialization import (
     VerifiedUserSchema,
     VerifySignInSchema,
 )
-from pytest_httpserver import HTTPServer
-from werkzeug import Response
 
 from .data_factory import (
     USER_ID,
