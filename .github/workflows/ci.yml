@@ -24,13 +24,13 @@ jobs:
           python-version: '3.8'
           cache: 'poetry'
       - name: Build
-        run: poetry install
+        run: poetry install --with dev,test
+      - name: Run isort
+        run: poetry run isort . --check-only
       - name: Run docformatter
         run: poetry run docformatter --in-place --config ./pyproject.toml src/
       - name: Run black
         run: poetry run black . --check
-      - name: Run isort
-        run: poetry run isort . --check-only
       - name: Run flake8
         run: poetry run flake8 .
       - name: Run mypy
