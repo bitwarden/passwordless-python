@@ -1,0 +1,14 @@
+{
+  "userId": "eb4dee07-2d05-404e-80ed-0f65d0c4e30e",
+  "timestamp": "2023-09-09T20:09:59.698674300Z",
+  "rpId": null,
+  "origin": "http://localhost:8080",
+  "device": "Chrome, Mac OS X 10",
+  "country": "PL",
+  "nickname": null,
+  "credentialId": "ZtmCjN6tOMM5X/KxfYApAHI+5n6C4KRy9YMeMqfNjj8=",
+  "success": true,
+  "expiresAt": "2023-09-09T20:11:59.698675700Z",
+  "tokenId": "0edd65bc-9b8d-4b1a-b208-21c6c8f1ad94",
+  "type": "passkey_signin"
+}

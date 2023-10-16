@@ -1,8 +1,10 @@
 [tool.poetry]
 name = "passwordless"
 version = "0.1.0"
-description = ""
-authors = []
+description = "Passwordless.dev Python SDK"
+authors = [
+    "Maciej Zieniuk <zieniuk.maciej@gmail.com>"
+]
 readme = "README.md"
 license = "LICENSE"
 classifiers = [
@@ -44,7 +46,7 @@ mkdocs = "*"
 [tool.mypy]
 python_version = "3.8"
 files = ["src/passwordless"]
-exclude = ["venv", "tests"]
+exclude = ["venv", "tests", "examples"]
 show_error_codes = true
 pretty = true
 strict = true

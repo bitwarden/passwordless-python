@@ -20,4 +20,4 @@ repos:
           types-requests>2,
           marshmallow>3
         ]
-        exclude: tests
+        exclude: tests|examples
