@@ -27,6 +27,7 @@ documentation = "https://docs.passwordless.dev/guide"
 python = "^3.8"
 requests = "^2"
 marshmallow = "^3"
+python-dateutil = "^2"
 
 [tool.poetry.group.dev]
 optional = true
