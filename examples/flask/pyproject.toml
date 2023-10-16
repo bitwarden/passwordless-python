@@ -3,6 +3,9 @@ name = "passwordless-example"
 version = "0.1.0"
 description = "Passwordless.dev Python SDK usage Example"
 authors = [
+    "Bitwarden <hello@bitwarden.com>"
+]
+maintainers = [
     "Maciej Zieniuk <zieniuk.maciej@gmail.com>"
 ]
 readme = "README.md"
