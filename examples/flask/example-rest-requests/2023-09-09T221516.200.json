@@ -1,0 +1,49 @@
+[
+  {
+    "userId": "859a22e0-befa-4ef4-ac49-54ed90c1deb2",
+    "aliasCount": 0,
+    "aliases": null,
+    "credentialsCount": 1,
+    "lastUsedAt": "2023-09-09T20:01:04.1426077"
+  },
+  {
+    "userId": "91f45043-9633-4e1f-812d-350ed9578346",
+    "aliasCount": 0,
+    "aliases": null,
+    "credentialsCount": 1,
+    "lastUsedAt": "2023-09-08T21:32:50.2848782"
+  },
+  {
+    "userId": "9fe847bc-2080-4b8e-bbae-f9359fae600e",
+    "aliasCount": 0,
+    "aliases": null,
+    "credentialsCount": 1,
+    "lastUsedAt": "2023-09-09T16:16:13.2927862"
+  },
+  {
+    "userId": "eb4dee07-2d05-404e-80ed-0f65d0c4e30e",
+    "aliasCount": 2,
+    "aliases": [
+      null,
+      null
+    ],
+    "credentialsCount": 1,
+    "lastUsedAt": "2023-09-09T20:09:59.6593325"
+  },
+  {
+    "userId": "f4e55073-dbf8-44a5-a3f8-56944cdcde3e",
+    "aliasCount": 0,
+    "aliases": null,
+    "credentialsCount": 1,
+    "lastUsedAt": "2023-09-09T16:13:36.3540002"
+  },
+  {
+    "userId": "f89b9155-a9ae-4b95-a79e-4c81b0b70cff",
+    "aliasCount": 1,
+    "aliases": [
+      null
+    ],
+    "credentialsCount": 1,
+    "lastUsedAt": "2023-09-09T14:35:57.9725004"
+  }
+]

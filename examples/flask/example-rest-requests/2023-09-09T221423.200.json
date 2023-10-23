@@ -1,0 +1,22 @@
+[
+  {
+    "descriptor": {
+      "type": "public-key",
+      "id": "ZtmCjN6tOMM5X_KxfYApAHI-5n6C4KRy9YMeMqfNjj8",
+      "transports": null
+    },
+    "publicKey": "pQECAyYgASFYIOsfC6kHh3pBohSGE6WwwGo8rJYG2lgmSbBfgtIq1gJzIlggr/6DYuFeATzcucHJ2ejCF2qWH7Z43yK4z/UYAV9YrY4=",
+    "userHandle": "ZWI0ZGVlMDctMmQwNS00MDRlLTgwZWQtMGY2NWQwYzRlMzBl",
+    "signatureCounter": 2,
+    "attestationFmt": "none",
+    "createdAt": "2023-09-09T20:05:03.6059728",
+    "aaGuid": "00000000-0000-0000-0000-000000000000",
+    "lastUsedAt": "2023-09-09T20:09:59.6593325",
+    "rpId": null,
+    "origin": "http://localhost:8080",
+    "country": "PL",
+    "device": "Chrome, Mac OS X 10",
+    "nickname": null,
+    "userId": "eb4dee07-2d05-404e-80ed-0f65d0c4e30e"
+  }
+]

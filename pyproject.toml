@@ -1,0 +1,90 @@
+[tool.poetry]
+name = "passwordless"
+version = "0.1.0"
+description = "Passwordless.dev Python SDK"
+authors = [
+    "Bitwarden <hello@bitwarden.com>"
+]
+maintainers = [
+    "Maciej Zieniuk <zieniuk.maciej@gmail.com>"
+]
+readme = "README.md"
+license = "Apache-2.0"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Developers",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Security",
+    "Topic :: Software Development :: Libraries",
+    "License :: OSI Approved :: Apache Software License"
+]
+keywords = ["passwordless", "bitwarden"]
+homepage = "https://bitwarden.com/products/passwordless"
+documentation = "https://docs.passwordless.dev/guide"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2"
+marshmallow = "^3"
+python-dateutil = "^2"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+python-dotenv = "*"
+flake8 = "*"
+black = "*"
+mypy = "*"
+isort = "*"
+pre-commit = "*"
+pre-commit-hooks = "*"
+types-requests = "^2"
+docformatter = {extras = ["tomli"], version = "^1.7.5"}
+
+[tool.poetry.group.test]
+optional = true
+
+[tool.poetry.group.test.dependencies]
+pytest = "*"
+pytest-mock = "*"
+pytest-httpserver = "*"
+
+[tool.mypy]
+python_version = "3.8"
+files = ["src/passwordless"]
+exclude = ["venv", "tests", "examples"]
+show_error_codes = true
+pretty = true
+strict = true
+
+[[tool.mypy.overrides]]
+module = [
+    "asgiref.*",
+    "dotenv.*",
+    "cryptography.*",
+    "importlib_metadata",
+]
+ignore_missing_imports = true
+
+[tool.black]
+line-length = 79
+target-version = ['py38']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 79
+
+[tool.docformatter]
+black = true
+recursive = true
+wrap-descriptions = 72
+wrap-summaries = 72
+blank = false
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

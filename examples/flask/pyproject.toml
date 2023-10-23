@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "passwordless-example"
+version = "0.1.0"
+description = "Passwordless.dev Python SDK usage Example"
+authors = [
+    "Bitwarden <hello@bitwarden.com>"
+]
+maintainers = [
+    "Maciej Zieniuk <zieniuk.maciej@gmail.com>"
+]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+passwordless = "^0"
+flask = "^2"
+flasgger = "^0"
+flask-marshmallow = "^0"
+
+[tool.poetry.group.dev.dependencies]
+python-dotenv = "*"
+
+[tool.black]
+line-length = 79
+target-version = ['py38']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 79
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

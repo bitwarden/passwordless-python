@@ -1,0 +1,6 @@
+[flake8]
+show-source = True
+doctests = True
+exclude =
+    src/passwordless/__init__.py
+    venv
