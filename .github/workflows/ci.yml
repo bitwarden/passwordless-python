@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build-maven:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
