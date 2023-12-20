@@ -74,7 +74,9 @@ class RegisterToken:
     user_verification: str = "preferred"
     aliases: List[str] = field(default_factory=list)
     alias_hashing: bool = True
-    expires_at: datetime = datetime.utcnow() + timedelta(minutes=2)
+    expires_at: datetime = field(
+        default_factory=lambda: datetime.utcnow() + timedelta(minutes=2)
+    )
 
 
 @dataclass

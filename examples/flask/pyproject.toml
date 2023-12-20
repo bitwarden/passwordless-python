@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "passwordless-example"
-version = "0.1.0"
+version = "0.1.1"
 description = "Passwordless.dev Python SDK usage Example"
 authors = [
     "Bitwarden <hello@bitwarden.com>"
