@@ -123,6 +123,19 @@ def build_register_token():
     )
 
 
+def build_register_token_without_expires_at():
+    return RegisterToken(
+        user_id=USER_ID,
+        username="TestUser",
+        attestation="none",
+        authenticator_type="any",
+        discoverable=True,
+        user_verification="preferred",
+        aliases=[],
+        alias_hashing=True,
+    )
+
+
 def build_registered_token():
     return RegisteredToken(
         "register_k8QgFOUhu_arMUbfi_93OZFdc6M39tPdmmNbx5xF"
