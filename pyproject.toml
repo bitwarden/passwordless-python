@@ -24,32 +24,32 @@ homepage = "https://bitwarden.com/products/passwordless"
 documentation = "https://docs.passwordless.dev/guide"
 
 [tool.poetry.dependencies]
-python = "^3.8"
-requests = "^2"
-marshmallow = "^3"
-python-dateutil = "^2"
+python = "3.12.2"
+requests = "2.31.0"
+marshmallow = "3.20.2"
+python-dateutil = "2.8.2"
 
 [tool.poetry.group.dev]
 optional = true
 
 [tool.poetry.group.dev.dependencies]
-python-dotenv = "*"
-flake8 = "*"
-black = "*"
-mypy = "*"
-isort = "*"
-pre-commit = "*"
-pre-commit-hooks = "*"
+python-dotenv = "1.0.1"
+flake8 = "5.0.4"
+black = "24.1.0"
+mypy = "1.8.0"
+isort = "5.13.2"
+pre-commit = "3.5.0"
+pre-commit-hooks = "4.5.0"
 types-requests = "^2"
-docformatter = {extras = ["tomli"], version = "^1.7.5"}
+docformatter = {extras = ["tomli"], version = "1.7.5"}
 
 [tool.poetry.group.test]
 optional = true
 
 [tool.poetry.group.test.dependencies]
-pytest = "*"
-pytest-mock = "*"
-pytest-httpserver = "*"
+pytest = "7.4.4"
+pytest-mock = "3.12.0"
+pytest-httpserver = "1.0.8"
 
 [tool.mypy]
 python_version = "3.8"
