@@ -219,3 +219,10 @@ class UserSummaryListResponseSchema(Schema):
 
 class DeleteUserSchema(Schema):
     user_id = fields.Str(data_key="userId", required=True)
+
+
+class SendMagicLinkRequestSchema(Schema):
+    email_address = fields.Str(data_key="emailAddress", required=True)
+    url_template = fields.Str(data_key="urlTemplate", required=True)
+    user_id = fields.Str(data_key="userId", required=True)
+    time_to_live = fields.Int(allow_none=True)

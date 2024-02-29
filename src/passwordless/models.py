@@ -118,3 +118,11 @@ class UserSummary(Generic[STR_OR_NONE]):
 @dataclass
 class DeleteUser:
     user_id: str
+
+
+@dataclass
+class SendMagicLinkRequest:
+    email_address: str
+    url_template: str
+    user_id: str
+    time_to_live: Optional[int] = None
