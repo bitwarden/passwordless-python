@@ -237,8 +237,8 @@ It will add the `poetry` command to {poetry}'s bin directory, located at:
 
 {poetry_home_bin}
 
-You can uninstall at any time by executing this script with the --uninstall option,
-and these changes will be reverted.
+You can uninstall at any time by executing this script with the --uninstall
+option, and these changes will be reverted.
 """
 
 POST_MESSAGE = """{poetry} ({version}) is installed now. Great!
@@ -250,8 +250,8 @@ You can test that everything is set up by executing:
 
 POST_MESSAGE_NOT_IN_PATH = """{poetry} ({version}) is installed now. Great!
 
-To get started you need {poetry}'s bin directory ({poetry_home_bin}) in your `PATH`
-environment variable.
+To get started you need {poetry}'s bin directory ({poetry_home_bin}) in your
+`PATH` environment variable.
 {configure_message}
 Alternatively, you can call {poetry} explicitly with `{poetry_executable}`.
 
@@ -284,7 +284,8 @@ class VirtualEnvironment:
         self._bin_path = self._path.joinpath(
             "Scripts" if WINDOWS and not MINGW else "bin"
         )
-        # str is for compatibility with subprocess.run on CPython <= 3.7 on Windows
+        # str is for compatibility with subprocess.run on CPython <= 3.7 on
+        # Windows
         self._python = str(
             self._path.joinpath(
                 self._bin_path, "python.exe" if WINDOWS else "python"
@@ -303,15 +304,15 @@ class VirtualEnvironment:
     def make(cls, target: Path) -> "VirtualEnvironment":
         if not sys.executable:
             raise ValueError(
-                "Unable to determine sys.executable. Set PATH to a sane value or set it"
-                " explicitly with PYTHONEXECUTABLE."
+                "Unable to determine sys.executable. Set PATH to a sane value"
+                " or set it explicitly with PYTHONEXECUTABLE."
             )
 
         try:
-            # on some linux distributions (eg: debian), the distribution provided python
-            # installation might not include ensurepip, causing the venv module to
-            # fail when attempting to create a virtual environment
-            # we import ensurepip but do not use it explicitly here
+            # on some linux distributions (eg: debian), the distribution
+            # provided python installation might not include ensurepip, causing
+            # the venv module to fail when attempting to create a virtual
+            # environment we import ensurepip but do not use it explicitly here
             import ensurepip  # noqa: F401
             import venv
 
@@ -329,11 +330,14 @@ class VirtualEnvironment:
 
             builder.create(target)
         except ImportError:
-            # fallback to using virtualenv package if venv is not available, eg: ubuntu
+            # fallback to using virtualenv package if venv is not available,
+            # eg: ubuntu
             python_version = (
                 f"{sys.version_info.major}.{sys.version_info.minor}"
             )
-            virtualenv_bootstrap_url = f"https://bootstrap.pypa.io/virtualenv/{python_version}/virtualenv.pyz"
+            virtualenv_bootstrap_url =\
+                (f"https://bootstrap.pypa.io/virtualenv/{python_version}"
+                 f"/virtualenv.pyz")
 
             with tempfile.TemporaryDirectory(
                 prefix="poetry-installer"
@@ -358,7 +362,8 @@ class VirtualEnvironment:
 
         env = cls(target)
 
-        # this ensures that outdated system default pip does not trigger older bugs
+        # this ensures that outdated system default pip does not trigger older
+        # bugs
         env.pip("install", "--disable-pip-version-check", "--upgrade", "pip")
 
         return env
@@ -549,9 +554,9 @@ class Installer:
             self._write(
                 colorize(
                     "warning",
-                    f"You are installing {version}. When using the current installer, "
-                    "this version does not support updating using the 'self update' "
-                    "command. Please use 1.1.7 or later.",
+                    f"You are installing {version}. When using the current"
+                    "installer, this version does not support updating using "
+                    "the 'self update' command. Please use 1.1.7 or later.",
                 )
             )
             if not self._accept_all:
@@ -836,7 +841,8 @@ class Installer:
 
         if current_version == version and not self._force:
             self._write(
-                f'The latest version ({colorize("b", version)}) is already installed.'
+                f'The latest version ({colorize("b", version)}) is already '
+                f'installed.'
             )
 
             return None, current_version
@@ -913,8 +919,8 @@ def main():
         dest="git",
         action="store",
         help=(
-            "Install from a git repository instead of fetching the latest version "
-            "of Poetry available online."
+            "Install from a git repository instead of fetching the latest "
+            "version of Poetry available online."
         ),
     )
 
