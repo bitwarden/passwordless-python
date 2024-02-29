@@ -9,9 +9,11 @@ from passwordless.serialization import (
     CredentialListResponseSchema,
     DeleteCredentialSchema,
     DeleteUserSchema,
+    GenerateAuthenticationTokenOptionsSchema,
+    GeneratedAuthenticationTokenSchema,
     RegisteredTokenSchema,
     RegisterTokenSchema,
-    SendMagicLinkRequestSchema,
+    SendMagicLinkOptionsSchema,
     SetAliasSchema,
     UpdateAppsFeatureSchema,
     UserSummaryListResponseSchema,
@@ -27,11 +29,13 @@ from .data_factory import (
     build_credential_2,
     build_delete_credential,
     build_delete_user,
+    build_generate_authentication_token_options,
+    build_generated_authentication_token,
     build_passwordless_problem_details_invalid_token,
     build_register_token,
     build_registered_token,
-    build_send_magic_link_request_1,
-    build_send_magic_link_request_2,
+    build_send_magic_link_options_1,
+    build_send_magic_link_options_2,
     build_set_alias,
     build_update_apps_feature,
     build_user_summary_1,
@@ -388,7 +392,7 @@ def test_delete_user_valid_request_no_error(httpserver: HTTPServer):
 def test_send_magic_link_error_response_exception(httpserver: HTTPServer):
     problem_details = build_passwordless_problem_details_invalid_token()
 
-    send_magic_link_request = build_send_magic_link_request_1()
+    send_magic_link_request = build_send_magic_link_options_1()
 
     httpserver.expect_oneshot_request(
         "/magic-link/send",
@@ -404,34 +408,81 @@ def test_send_magic_link_error_response_exception(httpserver: HTTPServer):
 
 
 def test_send_magic_link_valid_request_no_error_1(httpserver: HTTPServer):
-    request_schema = SendMagicLinkRequestSchema()
+    request_schema = SendMagicLinkOptionsSchema()
 
-    send_magic_link_request = build_send_magic_link_request_1()
+    options = build_send_magic_link_options_1()
 
     httpserver.expect_oneshot_request(
         "/magic-link/send",
         method="POST",
         headers=build_post_headers(),
-        data=request_schema.dumps(send_magic_link_request),
+        data=request_schema.dumps(options),
     ).respond_with_response(Response())
 
     client = build_passwordless_client(httpserver)
 
-    client.send_magic_link(send_magic_link_request)
+    client.send_magic_link(options)
 
 
 def test_send_magic_link_valid_request_no_error_2(httpserver: HTTPServer):
-    request_schema = SendMagicLinkRequestSchema()
+    request_schema = SendMagicLinkOptionsSchema()
 
-    send_magic_link_request = build_send_magic_link_request_2()
+    options = build_send_magic_link_options_2()
 
     httpserver.expect_oneshot_request(
         "/magic-link/send",
         method="POST",
         headers=build_post_headers(),
-        data=request_schema.dumps(send_magic_link_request),
+        data=request_schema.dumps(options),
     ).respond_with_response(Response())
 
     client = build_passwordless_client(httpserver)
 
-    client.send_magic_link(send_magic_link_request)
+    client.send_magic_link(options)
+
+
+def test_generate_authentication_token_in_error_response_exception(
+    httpserver: HTTPServer,
+):
+    problem_details = build_passwordless_problem_details_invalid_token()
+
+    options = build_generate_authentication_token_options()
+
+    httpserver.expect_oneshot_request(
+        "/signin/generate-token",
+        method="POST",
+        headers=build_post_headers(),
+    ).respond_with_response(build_problem_details_response(problem_details))
+
+    client = build_passwordless_client(httpserver)
+
+    with pytest.raises(PasswordlessError) as ex_info:
+        client.generate_authentication_token(options)
+    assert ex_info.value.problem_details == problem_details
+
+
+def test_generate_authentication_token_valid_request_no_error(
+    httpserver: HTTPServer,
+):
+    request_schema = GenerateAuthenticationTokenOptionsSchema()
+    response_schema = GeneratedAuthenticationTokenSchema()
+
+    options = build_verify_sign_in()
+    expected_generated_authentication_token = (
+        build_generated_authentication_token()
+    )
+
+    httpserver.expect_oneshot_request(
+        "/signin/generate-token",
+        method="POST",
+        headers=build_post_headers(),
+        data=request_schema.dumps(options),
+    ).respond_with_data(
+        response_schema.dumps(expected_generated_authentication_token)
+    )
+
+    client = build_passwordless_client(httpserver)
+
+    actual = client.generate_authentication_token(options)
+
+    assert actual == expected_generated_authentication_token

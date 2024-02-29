@@ -7,6 +7,7 @@ from .models import (
     Alias,
     Credential,
     CredentialDescriptor,
+    GeneratedAuthenticationToken,
     ListResponse,
     RegisteredToken,
     UserSummary,
@@ -221,8 +222,24 @@ class DeleteUserSchema(Schema):
     user_id = fields.Str(data_key="userId", required=True)
 
 
-class SendMagicLinkRequestSchema(Schema):
+class SendMagicLinkOptionsSchema(Schema):
     email_address = fields.Str(data_key="emailAddress", required=True)
     url_template = fields.Str(data_key="urlTemplate", required=True)
     user_id = fields.Str(data_key="userId", required=True)
     time_to_live = fields.Int(allow_none=True)
+
+
+class GenerateAuthenticationTokenOptionsSchema(Schema):
+    user_id = fields.Str(data_key="userId", required=True)
+    time_to_live = fields.Int(allow_none=True)
+
+
+class GeneratedAuthenticationTokenSchema(Schema):
+    token = fields.Str(data_key="token", required=True)
+
+    @post_load
+    def make(self, data: Any, **kwargs: Any) -> GeneratedAuthenticationToken:
+        return GeneratedAuthenticationToken(**data)
+
+    class Meta:
+        unknown = EXCLUDE

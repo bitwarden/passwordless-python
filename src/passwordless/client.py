@@ -11,10 +11,12 @@ from .models import (
     Credential,
     DeleteCredential,
     DeleteUser,
+    GenerateAuthenticationTokenOptions,
+    GeneratedAuthenticationToken,
     ListResponse,
     RegisteredToken,
     RegisterToken,
-    SendMagicLinkRequest,
+    SendMagicLinkOptions,
     SetAlias,
     UpdateAppsFeature,
     UserSummary,
@@ -26,10 +28,12 @@ from .serialization import (
     CredentialListResponseSchema,
     DeleteCredentialSchema,
     DeleteUserSchema,
+    GenerateAuthenticationTokenOptionsSchema,
+    GeneratedAuthenticationTokenSchema,
     PasswordlessProblemDetailsSchema,
     RegisteredTokenSchema,
     RegisterTokenSchema,
-    SendMagicLinkRequestSchema,
+    SendMagicLinkOptionsSchema,
     SetAliasSchema,
     UpdateAppsFeatureSchema,
     UserSummaryListResponseSchema,
@@ -155,11 +159,24 @@ class PasswordlessClient:
         pass
 
     @abstractmethod
-    def send_magic_link(self, send_magic_link: SendMagicLinkRequest) -> None:
+    def send_magic_link(self, options: SendMagicLinkOptions) -> None:
         """Sends a magic link.
 
-        :param send_magic_link: `DeleteUser` containing details about the
+        :param options: `SendMagicLinkOptions` containing details about the
             magic link to send.
+        :raises PasswordlessError: If the Passwordless Api responds with
+            an error.
+        """
+        pass
+
+    @abstractmethod
+    def generate_authentication_token(
+        self, options: GenerateAuthenticationTokenOptions
+    ) -> GeneratedAuthenticationToken:
+        """Can be used to implement a "magic link"-style login and other
+        similar scenarios.
+
+        :param options: The options to generate an authentication token.
         :raises PasswordlessError: If the Passwordless Api responds with
             an error.
         """
@@ -287,15 +304,32 @@ class PasswordlessClientImpl(PasswordlessClient, ABC):
 
         self.__send_request(request)
 
-    def send_magic_link(
-        self, send_magic_link_request: SendMagicLinkRequest
-    ) -> None:
-        schema = SendMagicLinkRequestSchema()
-        request_data = schema.dumps(send_magic_link_request)
+    def send_magic_link(self, options: SendMagicLinkOptions) -> None:
+        request_schema = SendMagicLinkOptionsSchema()
+        request_data = request_schema.dumps(options)
 
         request = self.__build_post_request("/magic-link/send", request_data)
 
         self.__send_request(request)
+
+    def generate_authentication_token(
+        self, options: GenerateAuthenticationTokenOptions
+    ) -> GeneratedAuthenticationToken:
+        schema = GenerateAuthenticationTokenOptionsSchema()
+        request_data = schema.dumps(options)
+
+        request = self.__build_post_request(
+            "/signin/generate-token", request_data
+        )
+
+        response = self.__send_request(request)
+
+        response_schema = GeneratedAuthenticationTokenSchema()
+        response_data: GeneratedAuthenticationToken = response_schema.loads(
+            response.text
+        )
+
+        return response_data
 
     def __build_get_request(
         self,

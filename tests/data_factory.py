@@ -6,11 +6,13 @@ from passwordless import (
     CredentialDescriptor,
     DeleteCredential,
     DeleteUser,
+    GenerateAuthenticationTokenOptions,
+    GeneratedAuthenticationToken,
     PasswordlessOptions,
     PasswordlessProblemDetails,
     RegisteredToken,
     RegisterToken,
-    SendMagicLinkRequest,
+    SendMagicLinkOptions,
     SetAlias,
     UpdateAppsFeature,
     UserSummary,
@@ -200,18 +202,28 @@ def build_delete_user():
     return DeleteUser(USER_ID)
 
 
-def build_send_magic_link_request_1():
-    return SendMagicLinkRequest(
+def build_send_magic_link_options_1():
+    return SendMagicLinkOptions(
         email_address="support@passwordless.dev",
         url_template="https://www.example.com?token=$TOKEN",
         user_id="859a22e0-befa-4ef4-ac49-54ed90c1deb2",
     )
 
 
-def build_send_magic_link_request_2():
-    return SendMagicLinkRequest(
+def build_send_magic_link_options_2():
+    return SendMagicLinkOptions(
         email_address="support@passwordless.dev",
         url_template="https://www.example.com?token=$TOKEN",
         user_id="859a22e0-befa-4ef4-ac49-54ed90c1deb2",
         time_to_live=24,
     )
+
+
+def build_generate_authentication_token_options():
+    return GenerateAuthenticationTokenOptions(
+        user_id="859a22e0-befa-4ef4-ac49-54ed90c1deb2"
+    )
+
+
+def build_generated_authentication_token():
+    return GeneratedAuthenticationToken(token="verify_123")
