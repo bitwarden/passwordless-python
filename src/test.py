@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-r"""
-This script will install Poetry and its dependencies in an isolated fashion.
+r"""This script will install Poetry and its dependencies in an isolated
+fashion.
 
 It will perform the following steps:
     * Create a new virtual environment using the built-in venv module, or the virtualenv zipapp if venv is unavailable.
@@ -25,7 +25,6 @@ For full documentation, visit https://python-poetry.org/docs/#installation.
 """  # noqa: E501
 import sys
 
-
 # Eager version check so we fail nicely before possible syntax errors
 if sys.version_info < (3, 6):  # noqa: UP036
     sys.stdout.write("Poetry installer requires Python 3.6 or newer to run!\n")
@@ -40,16 +39,12 @@ import shutil
 import subprocess
 import sysconfig
 import tempfile
-
-from contextlib import closing
-from contextlib import contextmanager
+from contextlib import closing, contextmanager
 from functools import cmp_to_key
 from io import UnsupportedOperation
 from pathlib import Path
 from typing import Optional
-from urllib.request import Request
-from urllib.request import urlopen
-
+from urllib.request import Request, urlopen
 
 SHELL = os.getenv("SHELL", "")
 WINDOWS = sys.platform.startswith("win") or (sys.platform == "cli" and os.name == "nt")
@@ -430,34 +425,27 @@ class Cursor:
         return self
 
     def clear_line(self) -> "Cursor":
-        """
-        Clears all the output from the current line.
-        """
+        """Clears all the output from the current line."""
         self._output.write("\x1b[2K")
 
         return self
 
     def clear_line_after(self) -> "Cursor":
-        """
-        Clears all the output from the current line after the current position.
-        """
+        """Clears all the output from the current line after the current
+        position."""
         self._output.write("\x1b[K")
 
         return self
 
     def clear_output(self) -> "Cursor":
-        """
-        Clears all the output from the cursors' current position
-        to the end of the screen.
-        """
+        """Clears all the output from the cursors' current position to
+        the end of the screen."""
         self._output.write("\x1b[0J")
 
         return self
 
     def clear_screen(self) -> "Cursor":
-        """
-        Clears the entire screen.
-        """
+        """Clears the entire screen."""
         self._output.write("\x1b[2J")
 
         return self
@@ -569,9 +557,7 @@ class Installer:
         return 0
 
     def install(self, version):
-        """
-        Installs Poetry in $POETRY_HOME.
-        """
+        """Installs Poetry in $POETRY_HOME."""
         self._write(
             "Installing {} ({})".format(
                 colorize("info", "Poetry"), colorize("info", version)
