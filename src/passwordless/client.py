@@ -14,6 +14,7 @@ from .models import (
     ListResponse,
     RegisteredToken,
     RegisterToken,
+    SendMagicLinkRequest,
     SetAlias,
     UpdateAppsFeature,
     UserSummary,
@@ -28,6 +29,7 @@ from .serialization import (
     PasswordlessProblemDetailsSchema,
     RegisteredTokenSchema,
     RegisterTokenSchema,
+    SendMagicLinkRequestSchema,
     SetAliasSchema,
     UpdateAppsFeatureSchema,
     UserSummaryListResponseSchema,
@@ -271,6 +273,14 @@ class PasswordlessClientImpl(PasswordlessClient, ABC):
         request_data = schema.dumps(delete_user)
 
         request = self.__build_post_request("/users/delete", request_data)
+
+        self.__send_request(request)
+
+    def send_magic_link(self, send_magic_link_request: SendMagicLinkRequest) -> None:
+        schema = SendMagicLinkRequestSchema()
+        request_data = schema.dumps(send_magic_link_request)
+
+        request = self.__build_post_request("/magic-link/send", request_data)
 
         self.__send_request(request)
 

@@ -11,6 +11,7 @@ from passwordless.serialization import (
     DeleteUserSchema,
     RegisteredTokenSchema,
     RegisterTokenSchema,
+    SendMagicLinkRequestSchema,
     SetAliasSchema,
     UpdateAppsFeatureSchema,
     UserSummaryListResponseSchema,
@@ -29,6 +30,8 @@ from .data_factory import (
     build_passwordless_problem_details_invalid_token,
     build_register_token,
     build_registered_token,
+    build_send_magic_link_request_1,
+    build_send_magic_link_request_2,
     build_set_alias,
     build_update_apps_feature,
     build_user_summary_1,
@@ -380,3 +383,55 @@ def test_delete_user_valid_request_no_error(httpserver: HTTPServer):
     client = build_passwordless_client(httpserver)
 
     client.delete_user(delete_user)
+
+
+def test_send_magic_link_error_response_exception(httpserver: HTTPServer):
+    problem_details = build_passwordless_problem_details_invalid_token()
+
+    send_magic_link_request = build_send_magic_link_request_1()
+
+    httpserver.expect_oneshot_request(
+        "/magic-link/send",
+        method="POST",
+        headers=build_post_headers(),
+    ).respond_with_response(build_problem_details_response(problem_details))
+
+    client = build_passwordless_client(httpserver)
+
+    with pytest.raises(PasswordlessError) as ex_info:
+        client.delete_user(send_magic_link_request)
+    assert ex_info.value.problem_details == problem_details
+
+
+def test_send_magic_link_valid_request_no_error_1(httpserver: HTTPServer):
+    request_schema = SendMagicLinkRequestSchema()
+
+    send_magic_link_request = build_send_magic_link_request_1()
+
+    httpserver.expect_oneshot_request(
+        "/magic-link/send",
+        method="POST",
+        headers=build_post_headers(),
+        data=request_schema.dumps(send_magic_link_request),
+    ).respond_with_response(Response())
+
+    client = build_passwordless_client(httpserver)
+
+    client.send_magic_link(send_magic_link_request)
+
+
+def test_send_magic_link_valid_request_no_error_2(httpserver: HTTPServer):
+    request_schema = SendMagicLinkRequestSchema()
+
+    send_magic_link_request = build_send_magic_link_request_2()
+
+    httpserver.expect_oneshot_request(
+        "/magic-link/send",
+        method="POST",
+        headers=build_post_headers(),
+        data=request_schema.dumps(send_magic_link_request),
+    ).respond_with_response(Response())
+
+    client = build_passwordless_client(httpserver)
+
+    client.send_magic_link(send_magic_link_request)
