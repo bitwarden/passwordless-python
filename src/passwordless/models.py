@@ -121,8 +121,19 @@ class DeleteUser:
 
 
 @dataclass
-class SendMagicLinkRequest:
+class SendMagicLinkOptions:
     email_address: str
     url_template: str
     user_id: str
     time_to_live: Optional[int] = None
+
+
+@dataclass
+class GenerateAuthenticationTokenOptions:
+    user_id: str
+    time_to_live: Optional[int] = None
+
+
+@dataclass
+class GeneratedAuthenticationToken:
+    token: str
