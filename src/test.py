@@ -335,9 +335,10 @@ class VirtualEnvironment:
             python_version = (
                 f"{sys.version_info.major}.{sys.version_info.minor}"
             )
-            virtualenv_bootstrap_url =\
-                (f"https://bootstrap.pypa.io/virtualenv/{python_version}"
-                 f"/virtualenv.pyz")
+            virtualenv_bootstrap_url = (
+                f"https://bootstrap.pypa.io/virtualenv/{python_version}"
+                f"/virtualenv.pyz"
+            )
 
             with tempfile.TemporaryDirectory(
                 prefix="poetry-installer"
@@ -842,7 +843,7 @@ class Installer:
         if current_version == version and not self._force:
             self._write(
                 f'The latest version ({colorize("b", version)}) is already '
-                f'installed.'
+                f"installed."
             )
 
             return None, current_version
