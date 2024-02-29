@@ -154,6 +154,17 @@ class PasswordlessClient:
         """
         pass
 
+    @abstractmethod
+    def send_magic_link(self, send_magic_link: SendMagicLinkRequest) -> None:
+        """Sends a magic link.
+
+        :param send_magic_link: `DeleteUser` containing details about the
+            magic link to send.
+        :raises PasswordlessError: If the Passwordless Api responds with
+            an error.
+        """
+        pass
+
 
 def handle_response_error(response: Response) -> None:
     problem_details = None

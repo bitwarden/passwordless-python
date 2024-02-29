@@ -399,7 +399,7 @@ def test_send_magic_link_error_response_exception(httpserver: HTTPServer):
     client = build_passwordless_client(httpserver)
 
     with pytest.raises(PasswordlessError) as ex_info:
-        client.delete_user(send_magic_link_request)
+        client.send_magic_link(send_magic_link_request)
     assert ex_info.value.problem_details == problem_details
 
 
