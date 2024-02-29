@@ -276,7 +276,9 @@ class PasswordlessClientImpl(PasswordlessClient, ABC):
 
         self.__send_request(request)
 
-    def send_magic_link(self, send_magic_link_request: SendMagicLinkRequest) -> None:
+    def send_magic_link(
+        self, send_magic_link_request: SendMagicLinkRequest
+    ) -> None:
         schema = SendMagicLinkRequestSchema()
         request_data = schema.dumps(send_magic_link_request)
 

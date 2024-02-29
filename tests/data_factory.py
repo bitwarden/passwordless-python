@@ -199,6 +199,7 @@ def build_user_summary_2():
 def build_delete_user():
     return DeleteUser(USER_ID)
 
+
 def build_send_magic_link_request_1():
     return SendMagicLinkRequest(
         email_address="support@passwordless.dev",
@@ -206,10 +207,11 @@ def build_send_magic_link_request_1():
         user_id="859a22e0-befa-4ef4-ac49-54ed90c1deb2",
     )
 
+
 def build_send_magic_link_request_2():
     return SendMagicLinkRequest(
         email_address="support@passwordless.dev",
         url_template="https://www.example.com?token=$TOKEN",
         user_id="859a22e0-befa-4ef4-ac49-54ed90c1deb2",
-        time_to_live=24
+        time_to_live=24,
     )
