@@ -177,8 +177,7 @@ class PasswordlessClient:
         similar scenarios.
 
         :param options: The options to generate an authentication token.
-        :return: User token details upon successful verification of the
-            token.
+        :return: User token details upon successful generation of the token.
         :raises PasswordlessError: If the Passwordless Api responds with
             an error.
         """
