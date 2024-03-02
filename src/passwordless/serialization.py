@@ -226,12 +226,12 @@ class SendMagicLinkOptionsSchema(Schema):
     email_address = fields.Str(data_key="emailAddress", required=True)
     url_template = fields.Str(data_key="urlTemplate", required=True)
     user_id = fields.Str(data_key="userId", required=True)
-    time_to_live = fields.Int(allow_none=True)
+    time_to_live = fields.Int(data_key="timeToLive", allow_none=True)
 
 
 class GenerateAuthenticationTokenOptionsSchema(Schema):
     user_id = fields.Str(data_key="userId", required=True)
-    time_to_live = fields.Int(allow_none=True)
+    time_to_live = fields.Int(data_key="timeToLive", allow_none=True)
 
 
 class GeneratedAuthenticationTokenSchema(Schema):
