@@ -24,7 +24,7 @@ homepage = "https://bitwarden.com/products/passwordless"
 documentation = "https://docs.passwordless.dev/guide"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "~3.8"
 requests = "^2"
 marshmallow = "^3"
 python-dateutil = "^2"
