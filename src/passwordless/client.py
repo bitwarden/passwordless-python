@@ -310,7 +310,7 @@ class PasswordlessClientImpl(PasswordlessClient, ABC):
         request_schema = SendMagicLinkOptionsSchema()
         request_data = request_schema.dumps(options)
 
-        request = self.__build_post_request("/magic-link/send", request_data)
+        request = self.__build_post_request("/magic-links/send", request_data)
 
         self.__send_request(request)
 

@@ -395,7 +395,7 @@ def test_send_magic_link_error_response_exception(httpserver: HTTPServer):
     send_magic_link_request = build_send_magic_link_options_1()
 
     httpserver.expect_oneshot_request(
-        "/magic-link/send",
+        "/magic-links/send",
         method="POST",
         headers=build_post_headers(),
     ).respond_with_response(build_problem_details_response(problem_details))
@@ -413,7 +413,7 @@ def test_send_magic_link_valid_request_no_error_1(httpserver: HTTPServer):
     options = build_send_magic_link_options_1()
 
     httpserver.expect_oneshot_request(
-        "/magic-link/send",
+        "/magic-links/send",
         method="POST",
         headers=build_post_headers(),
         data=request_schema.dumps(options),
@@ -430,7 +430,7 @@ def test_send_magic_link_valid_request_no_error_2(httpserver: HTTPServer):
     options = build_send_magic_link_options_2()
 
     httpserver.expect_oneshot_request(
-        "/magic-link/send",
+        "/magic-links/send",
         method="POST",
         headers=build_post_headers(),
         data=request_schema.dumps(options),
