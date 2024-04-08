@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "passwordless"
-version = "0.1.1"
+version = "1.0"
 description = "Passwordless.dev Python SDK"
 authors = [
     "Bitwarden <hello@bitwarden.com>"
@@ -11,12 +11,13 @@ maintainers = [
 readme = "README.md"
 license = "Apache-2.0"
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python :: 3",
     "Intended Audience :: Developers",
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Security",
     "Topic :: Software Development :: Libraries",
+    "Topic :: Communications :: FIDO",
     "License :: OSI Approved :: Apache Software License"
 ]
 keywords = ["passwordless", "bitwarden"]
