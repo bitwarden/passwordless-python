@@ -1,5 +1,9 @@
 # Passwordless Python SDK
 
+[![Build](https://img.shields.io/github/actions/workflow/status/bitwarden/passwordless-python/ci.yml?branch=main)](https://github.com/bitwarden/passwordless-python/actions)
+[![Version](https://img.shields.io/pypi/v/Passwordless.svg)](https://pypi.org/project/passwordless/)
+[![Downloads](https://img.shields.io/pypi/dm/Passwordless.svg)](https://pypi.org/project/passwordless/)
+
 The official [Bitwarden Passwordless.dev](https://passwordless.dev/) Python library, for Python 3+.
 
 ## Installation
