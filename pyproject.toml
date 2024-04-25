@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "passwordless"
-version = "1.0.0"
+version = "1.0.1"
 description = "Passwordless.dev Python SDK"
 authors = [
     "Bitwarden <hello@bitwarden.com>"
@@ -25,10 +25,10 @@ homepage = "https://bitwarden.com/products/passwordless"
 documentation = "https://docs.passwordless.dev/guide"
 
 [tool.poetry.dependencies]
-python = "3.8.18"
-requests = "2.31.0"
-marshmallow = "3.21.1"
-python-dateutil = "2.9.0.post0"
+python = ">=3.8"
+requests = "^2"
+marshmallow = "^3"
+python-dateutil = "^2"
 
 [tool.poetry.group.dev]
 optional = true
@@ -42,7 +42,7 @@ isort = "5.13.2"
 pre-commit = "3.5.0"
 pre-commit-hooks = "4.5.0"
 types-requests = "2.31.0.20240406"
-docformatter = {extras = ["tomli"], version = "1.7.5"}
+docformatter = {extras = ["tomli"], version = "1.7.5", python = ">=3.8,<4.0"}
 
 [tool.poetry.group.test]
 optional = true
