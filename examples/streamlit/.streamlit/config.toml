@@ -1,2 +1,4 @@
 [browser]
 gatherUsageStats = false
+serverAddress="localhost"
+serverPort=8501

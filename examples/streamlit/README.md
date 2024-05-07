@@ -30,6 +30,18 @@ Install dependencies: `poetry install --with dev`
 5. The application will now listen on port `8501` e.g. http://localhost:8501, where you can *Sign In* and *Register*
    users within your Application.
 
-[passwordless-python-sdk]:https://github.com/passwordless/passwordless-python
+### Preparing for production
+
+1. Edit the `[browser]` section in the [config.toml](.streamlit%2Fconfig.toml) file:
+    - Change `serverAddress` to your host name
+    - Change `serverPort` to your port. For `https://` use 443.
+2. To run the application with `https://` scheme:
+    1. Put reverse proxy with SSL in front of the application.
+    2. Provide the path to the certificate and key files, by modifying `sslCertFile` and `sslKeyFile` in the
+       `[server]` section of the [config.toml](.streamlit%2Fconfig.toml) file
+
+Note: WebAuthn will only work with `https://` scheme with a valid, trusted certificate.
+
+[passwordless-python-sdk]:https://github.com/bitwarden/passwordless-python
 
 [poetry]:https://python-poetry.org/docs/#installation
