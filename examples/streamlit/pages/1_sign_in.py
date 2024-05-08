@@ -1,6 +1,5 @@
-import streamlit as st
-
 import passwordless_api
+import streamlit as st
 from passwordless_auth import passwordless_auth_component
 
 st.set_page_config(page_title="Sign In")
@@ -14,18 +13,23 @@ if st.button("Login"):
     st.session_state.login_init = True
 
 if "login_init" in st.session_state:
-    auth_result = passwordless_auth_component("passwordless_auth_login", {
-        "api_url": st.secrets["passwordless_api_url"],
-        "api_key": st.secrets["passwordless_api_key"],
-        "type": "login",
-        "alias": st.session_state.alias
-    })
+    auth_result = passwordless_auth_component(
+        "passwordless_auth_login",
+        {
+            "api_url": st.secrets["passwordless_api_url"],
+            "api_key": st.secrets["passwordless_api_key"],
+            "type": "login",
+            "alias": st.session_state.alias,
+        },
+    )
     print(auth_result)
 
     if auth_result is not None:
 
         if "token" in auth_result:
-            st.session_state.login_user = passwordless_api.login(auth_result["token"])
+            st.session_state.login_user = passwordless_api.login(
+                auth_result["token"]
+            )
         else:
             st.session_state.auth_error = auth_result
 

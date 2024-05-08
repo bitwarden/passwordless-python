@@ -1,6 +1,7 @@
 import uuid
 
 import streamlit as st
+
 from passwordless import (
     PasswordlessClientBuilder,
     PasswordlessOptions,
@@ -10,17 +11,21 @@ from passwordless import (
 
 
 def get_passwordless_client():
-    options = PasswordlessOptions(api_url=st.secrets["passwordless_api_url"],
-                                  api_secret=st.secrets["passwordless_api_secret"])
+    options = PasswordlessOptions(
+        api_url=st.secrets["passwordless_api_url"],
+        api_secret=st.secrets["passwordless_api_secret"],
+    )
     return PasswordlessClientBuilder(options).build()
 
 
 def register(username: str, alias: str):
     client = get_passwordless_client()
 
-    register_token = RegisterToken(user_id=str(uuid.uuid4()),
-                                   username=username,
-                                   aliases=[alias] if alias != "" else [])
+    register_token = RegisterToken(
+        user_id=str(uuid.uuid4()),
+        username=username,
+        aliases=[alias] if alias != "" else [],
+    )
     print(register_token)
 
     registered_token = client.register_token(register_token)
