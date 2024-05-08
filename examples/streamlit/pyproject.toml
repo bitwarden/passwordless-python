@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "passwordless-example-flask"
+name = "passwordless-example-streamlit"
 version = "1.0.0"
 description = "Passwordless.dev Python SDK usage Example"
 authors = [
@@ -11,14 +11,13 @@ maintainers = [
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.8"
+python = "!=3.9.7,>=3.8"
 passwordless = "^1"
-flask = "^2"
-flasgger = "^0"
-flask-marshmallow = "^0"
+streamlit = "1.34.0"
 
 [tool.poetry.group.dev.dependencies]
 python-dotenv = "*"
+watchdog = "*"
 
 [tool.black]
 line-length = 79

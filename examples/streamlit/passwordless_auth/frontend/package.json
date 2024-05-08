@@ -1,0 +1,18 @@
+{
+  "name": "passwordless-auth",
+  "version": "0.1.0",
+  "type": "module",
+  "module": "./dist/main.js",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "rm -rf dist && vite build ",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "streamlit-component-lib": "^2.0.0"
+  },
+  "devDependencies": {
+    "vite": "^5.2.10"
+  }
+}
