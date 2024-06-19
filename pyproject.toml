@@ -49,7 +49,7 @@ optional = true
 
 [tool.poetry.group.test.dependencies]
 pytest = "8.2.2"
-pytest-mock = "3.12.0"
+pytest-mock = "3.14.0"
 pytest-httpserver = "1.0.10"
 
 [tool.mypy]
