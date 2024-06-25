@@ -1,0 +1,18 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>bitwarden/renovate-config"],
+  "enabledManagers": ["github-actions", "poetry"],
+  "packageRules": [
+    {
+      "groupName": "gh minor",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "groupName": "poetry minor",
+      "matchManagers": ["poetry"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "rangeStrategy": "update-lockfile"
+    }
+  ]
+}
