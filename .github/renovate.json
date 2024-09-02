@@ -9,10 +9,11 @@
       "matchUpdateTypes": ["minor", "patch"]
     },
     {
-      "groupName": "poetry minor",
+      "groupName": "poetry",
       "matchManagers": ["poetry"],
-      "matchUpdateTypes": ["minor", "patch"],
       "rangeStrategy": "update-lockfile"
     }
   ]
 }
+
+
