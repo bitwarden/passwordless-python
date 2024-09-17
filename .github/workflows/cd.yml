@@ -19,6 +19,8 @@ jobs:
         with:
           python-version: '3.9'
           cache: 'poetry'
+      - name: Poetry environment information
+        run: poetry env info
       - name: Configure PYPI
         run: poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
       - name: Publish to PYPI
