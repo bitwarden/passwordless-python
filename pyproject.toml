@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "passwordless"
-version = "1.0.2"
+version = "2.0.0"
 description = "Passwordless.dev Python SDK"
 authors = [
     "Bitwarden <hello@bitwarden.com>"
