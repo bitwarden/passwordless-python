@@ -23,6 +23,8 @@ jobs:
         with:
           python-version: '3.9'
           cache: 'poetry'
+      - name: Poetry environment information
+        run: poetry env info
       - name: Build
         run: poetry install --with dev,test
       - name: Run isort
