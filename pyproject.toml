@@ -25,7 +25,7 @@ homepage = "https://bitwarden.com/products/passwordless"
 documentation = "https://docs.passwordless.dev/guide"
 
 [tool.poetry.dependencies]
-python = ">=3.8"
+python = ">=3.9"
 requests = "^2"
 marshmallow = "^3"
 python-dateutil = "^2"
@@ -53,7 +53,7 @@ pytest-mock = "3.14.0"
 pytest-httpserver = "1.1.0"
 
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.9"
 files = ["src/passwordless"]
 exclude = ["venv", "tests", "examples"]
 show_error_codes = true
@@ -71,7 +71,7 @@ ignore_missing_imports = true
 
 [tool.black]
 line-length = 79
-target-version = ['py38']
+target-version = ['py39']
 include = '\.pyi?$'
 
 [tool.isort]

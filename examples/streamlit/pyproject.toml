@@ -11,7 +11,7 @@ maintainers = [
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "!=3.9.7,>=3.8"
+python = ">=3.9"
 passwordless = "^1"
 streamlit = "1.34.0"
 
@@ -21,7 +21,7 @@ watchdog = "*"
 
 [tool.black]
 line-length = 79
-target-version = ['py38']
+target-version = ['py39']
 include = '\.pyi?$'
 
 [tool.isort]
