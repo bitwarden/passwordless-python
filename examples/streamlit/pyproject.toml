@@ -12,7 +12,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.9"
-passwordless = "^1"
+passwordless = "^2"
 streamlit = "1.34.0"
 
 [tool.poetry.group.dev.dependencies]
