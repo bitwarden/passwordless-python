@@ -12,7 +12,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.9"
-passwordless = "^2"
+passwordless = { path = "../../" }
 flask = "^2"
 flasgger = "^0"
 flask-marshmallow = "^0"
