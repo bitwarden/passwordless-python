@@ -18,10 +18,10 @@ jobs:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: Install poetry
         run: pipx install poetry
-      - name: Set up Python 3.8
+      - name: Set up Python
         uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
         with:
-          python-version: '3.8'
+          python-version: '3.9'
           cache: 'poetry'
       - name: Build
         run: poetry install --with dev,test
