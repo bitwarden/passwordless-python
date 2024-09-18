@@ -62,7 +62,7 @@ jobs:
         run: poetry env info
       - name: Build
         run: |
-          cd examples/flask;
+          cd examples/flask
           poetry install --with dev
 
   build-streamlit-example:
