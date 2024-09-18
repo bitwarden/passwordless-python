@@ -85,5 +85,5 @@ jobs:
         run: poetry env info
       - name: Build
         run: |
-          cd examples/streamlit;
+          cd examples/streamlit
           poetry install --with dev
