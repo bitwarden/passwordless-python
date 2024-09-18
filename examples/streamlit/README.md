@@ -7,7 +7,7 @@ Please read the documentation here: https://docs.passwordless.dev
 This example uses *StreamLit* and provides UI to interact with
 the [Passwordless Python SDK][passwordless-python-sdk] to the *Passwordless API*.
 
-Python 3.8 or newer is required to run the application.
+Python 3.9 or newer is required to run the application.
 For frontend, install Node.
 
 Install [Poetry][poetry] if not already installed.
