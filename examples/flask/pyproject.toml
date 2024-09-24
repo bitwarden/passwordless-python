@@ -11,8 +11,8 @@ maintainers = [
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.8"
-passwordless = "^1"
+python = ">=3.9"
+passwordless = { path = "../../" }
 flask = "^2"
 flasgger = "^0"
 flask-marshmallow = "^0"
@@ -22,7 +22,7 @@ python-dotenv = "*"
 
 [tool.black]
 line-length = 79
-target-version = ['py38']
+target-version = ['py39']
 include = '\.pyi?$'
 
 [tool.isort]

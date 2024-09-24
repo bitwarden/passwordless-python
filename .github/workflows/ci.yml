@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build:
+  build-sdk:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -18,11 +18,15 @@ jobs:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: Install poetry
         run: pipx install poetry
-      - name: Set up Python 3.8
+      - name: Set up Python
         uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
         with:
-          python-version: '3.8'
+          python-version: '3.9'
           cache: 'poetry'
+      - name: Setup
+        run: poetry env use 3.9
+      - name: Environment information
+        run: poetry env info
       - name: Build
         run: poetry install --with dev,test
       - name: Run isort
@@ -37,3 +41,50 @@ jobs:
         run: poetry run mypy .
       - name: Test
         run: poetry run pytest
+
+  build-flask-example:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - name: Install poetry
+        run: pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
+        with:
+          python-version: '3.9'
+          cache: 'poetry'
+      - name: Setup
+        run: poetry env use 3.9
+      - name: Environment information
+        run: poetry env info
+      - name: Build
+        run: |
+          cd examples/flask
+          poetry install --with dev
+
+  build-streamlit-example:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - name: Install poetry
+        run: pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
+        with:
+          python-version: '3.9'
+          cache: 'poetry'
+      - name: Setup
+        run: poetry env use 3.9
+      - name: Environment information
+        run: poetry env info
+      - name: Build
+        run: |
+          cd examples/streamlit
+          poetry install --with dev
+  

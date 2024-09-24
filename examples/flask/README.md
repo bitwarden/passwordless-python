@@ -7,7 +7,7 @@ Please read the documentation here: https://docs.passwordless.dev
 This example uses *Flask* and provides UI and REST interfaces to interact with
 the [Passwordless Python SDK][passwordless-python-sdk] to the *Passwordless API*.
 
-Python 3.8 or newer is required to run the application.
+Python 3.9 or newer is required to run the application.
 Install [Poetry][poetry] if not already installed.
 
 Activate shell: `poetry shell`

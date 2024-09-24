@@ -99,7 +99,7 @@ For a comprehensive list of examples, check out the [API documentation][api-docs
 
 ## Contributing
 
-This library is compatible with Python 3 and requires minimum Python 3.8 installed.
+This library is compatible with Python 3 and requires minimum Python 3.9 installed.
 Install [Poetry][poetry] if not already installed.
 
 Activate shell: `poetry shell`
