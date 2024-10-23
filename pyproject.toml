@@ -35,12 +35,12 @@ optional = true
 
 [tool.poetry.group.dev.dependencies]
 python-dotenv = "1.0.1"
-flake8 = "5.0.4"
+flake8 = "7.1.1"
 black = "24.10.0"
 mypy = "1.13.0"
 isort = "5.13.2"
-pre-commit = "3.8.0"
-pre-commit-hooks = "4.6.0"
+pre-commit = "4.0.1"
+pre-commit-hooks = "5.0.0"
 types-requests = "2.32.0.20241016"
 docformatter = {extras = ["tomli"], version = "1.7.5", python = ">=3.8,<4.0"}
 
