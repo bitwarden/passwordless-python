@@ -37,7 +37,7 @@ optional = true
 python-dotenv = "1.0.1"
 flake8 = "7.1.1"
 black = "24.10.0"
-mypy = "1.13.0"
+mypy = "1.14.0"
 isort = "5.13.2"
 pre-commit = "4.0.1"
 pre-commit-hooks = "5.0.0"
@@ -48,7 +48,7 @@ docformatter = {extras = ["tomli"], version = "1.7.5", python = ">=3.8,<4.0"}
 optional = true
 
 [tool.poetry.group.test.dependencies]
-pytest = "8.3.3"
+pytest = "8.3.4"
 pytest-mock = "3.14.0"
 pytest-httpserver = "1.1.0"
 
