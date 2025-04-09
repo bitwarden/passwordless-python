@@ -21,7 +21,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
-          python-version: '3.9'
+          python-version: '3.9.22'
           cache: 'poetry'
       - name: Setup
         run: poetry env use 3.9
@@ -54,7 +54,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
-          python-version: '3.9'
+          python-version: '3.9.22'
           cache: 'poetry'
       - name: Setup
         run: poetry env use 3.9
@@ -77,7 +77,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
-          python-version: '3.9'
+          python-version: '3.9.22'
           cache: 'poetry'
       - name: Setup
         run: poetry env use 3.9
