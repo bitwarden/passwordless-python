@@ -10,6 +10,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+      id-token: write
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Install poetry
@@ -23,7 +24,22 @@ jobs:
         run: poetry env use 3.9
       - name: Environment information
         run: poetry env info
+      - name: Azure Login
+        id: azure-login
+        uses: bitwarden/gh-actions/azure-login@main
+        with:
+          subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+          client_id: ${{ secrets.AZURE_CLIENT_ID }}
+      - name: Get KV secrets
+        id: get-kv-secrets
+        uses: bitwarden/gh-actions/get-keyvault-secrets@main
+        with:
+          keyvault: gh-passwordless-python
+          secrets: "PYPI_TOKEN"
+      - name: Azure Logout
+        uses: bitwarden/gh-actions/azure-logout@main
       - name: Configure PYPI
-        run: poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
+        run: poetry config pypi-token.pypi ${{ steps.get-kv-secrets.outputs.PYPI_TOKEN }}
       - name: Publish to PYPI
         run: poetry publish --build
