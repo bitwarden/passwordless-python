@@ -6,13 +6,15 @@ on:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    name: Publish
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
       id-token: write
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Checkout Repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Install poetry
         run: pipx install poetry
       - name: Set up Python
@@ -36,10 +38,10 @@ jobs:
         uses: bitwarden/gh-actions/get-keyvault-secrets@main
         with:
           keyvault: gh-passwordless-python
-          secrets: "PYPI_TOKEN"
+          secrets: "PYPI-TOKEN"
       - name: Azure Logout
         uses: bitwarden/gh-actions/azure-logout@main
       - name: Configure PYPI
-        run: poetry config pypi-token.pypi ${{ steps.get-kv-secrets.outputs.PYPI_TOKEN }}
+        run: poetry config pypi-token.pypi ${{ steps.get-kv-secrets.outputs.PYPI-TOKEN }}
       - name: Publish to PYPI
         run: poetry publish --build
