@@ -8,14 +8,19 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   build-sdk:
-    runs-on: ubuntu-latest
+    name: Build and Test SDK
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Checkout Repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Install poetry
         run: pipx install poetry
       - name: Set up Python
@@ -43,12 +48,14 @@ jobs:
         run: poetry run pytest
 
   build-flask-example:
-    runs-on: ubuntu-latest
+    name: Build and Test Flask Example
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Checkout Repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Install poetry
         run: pipx install poetry
       - name: Set up Python
@@ -66,12 +73,14 @@ jobs:
           poetry install --with dev
 
   build-streamlit-example:
-    runs-on: ubuntu-latest
+    name: Build and Test Streamlit Example
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Checkout Repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Install poetry
         run: pipx install poetry
       - name: Set up Python
