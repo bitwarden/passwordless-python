@@ -7,10 +7,10 @@ on:
 jobs:
   publish:
     name: Publish
+    environment: PyPI
     runs-on: ubuntu-24.04
     permissions:
       contents: read
-      packages: write
       id-token: write
     steps:
       - name: Checkout Repo
@@ -26,21 +26,7 @@ jobs:
         run: poetry env use 3.9
       - name: Environment information
         run: poetry env info
-      - name: Log in to Azure
-        uses: bitwarden/gh-actions/azure-login@main
-        with:
-          subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          tenant_id: ${{ secrets.AZURE_TENANT_ID }}
-          client_id: ${{ secrets.AZURE_CLIENT_ID }}
-      - name: Get Azure Key Vault secrets
-        id: get-kv-secrets
-        uses: bitwarden/gh-actions/get-keyvault-secrets@main
-        with:
-          keyvault: gh-passwordless-python
-          secrets: "PYPI-TOKEN"
-      - name: Log out from Azure
-        uses: bitwarden/gh-actions/azure-logout@main
-      - name: Configure PYPI
-        run: poetry config pypi-token.pypi ${{ steps.get-kv-secrets.outputs.PYPI-TOKEN }}
-      - name: Publish to PYPI
-        run: poetry publish --build
+      - name: Build package
+        run: poetry build
+      - name: Publish - PyPI
+        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13.0
