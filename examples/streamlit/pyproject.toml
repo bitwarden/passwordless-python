@@ -9,6 +9,7 @@ maintainers = [
     "Maciej Zieniuk <zieniuk.maciej@gmail.com>"
 ]
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.9.7 || >3.9.7"
