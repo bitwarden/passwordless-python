@@ -12,7 +12,7 @@ readme = "README.md"
 package-mode = false
 
 [tool.poetry.dependencies]
-python = ">=3.9"
+python = ">=3.10"
 passwordless = { path = "../../" }
 flask = "^2"
 flasgger = "^0"
@@ -23,7 +23,7 @@ python-dotenv = "*"
 
 [tool.black]
 line-length = 79
-target-version = ['py39']
+target-version = ['py310']
 include = '\.pyi?$'
 
 [tool.isort]
