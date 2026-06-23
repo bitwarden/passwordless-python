@@ -27,7 +27,7 @@ documentation = "https://docs.passwordless.dev/guide"
 [tool.poetry.dependencies]
 python = ">=3.10"
 requests = "^2"
-marshmallow = "^3"
+marshmallow = "^4.0.0"
 python-dateutil = "^2"
 
 [tool.poetry.group.dev]
@@ -37,10 +37,10 @@ optional = true
 python-dotenv = "1.2.2"
 flake8 = "7.1.1"
 black = "26.3.1"
-mypy = "1.14.1"
-isort = "5.13.2"
+mypy = "2.1.0"
+isort = "8.0.1"
 pre-commit = "4.0.1"
-pre-commit-hooks = "5.0.0"
+pre-commit-hooks = "6.0.0"
 types-requests = "2.32.0.20241016"
 docformatter = {extras = ["tomli"], version = "1.7.5", python = ">=3.10,<4.0"}
 
