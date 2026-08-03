@@ -11,8 +11,7 @@ on:
         required: true
         type: string
 
-permissions:
-  deployments: write
+permissions: {}
 
 jobs:
   trigger-publish:
@@ -20,10 +19,14 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       deployments: write
+      id-token: write
     steps:
       - name: Trigger publish via bitwarden/deploy
         uses: bitwarden/gh-actions/trigger-actions@main
         with:
+          azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+          azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
           task: publish-passwordless-python
           data: |
             {
